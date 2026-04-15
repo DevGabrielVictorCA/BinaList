@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BinaList</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <h1>BinaList</h1><br>
+    <form action="#">
+        <input type="text" id="campo-tarefa" placeholder="O que você precisa fazer?">
+        <button id="enviar-tarefa-btn">Enviar</button>
+        <button type="button" id="cancelar">Cancelar</button>
+        <br><br>
+
+        <select id="categorias">
+            <option value="" selected disabled>-- Categorias --</option>
+            <option value="estudos">Estudos</option>
+            <option value="trabalho">Trabalho</option>
+            <option value="pessoal">Pessoal</option>
+        </select>
+
+        <input type="date" id="data-tarefa">
+
+        <select id="prioridade">
+            <option value="" selected disabled>-- Prioridade --</option>
+            <option value="alta">Alta</option>
+            <option value="media">Média</option>
+            <option value="baixa">Baixa</option>
+        </select>
+    </form>
+
+    <br><br>
+    <h2>Tarefa Destaque</h2>
+    <br>
+
+    <div class="tarefa-destaque"></div>
+
+    <br><br>
+    <h2>Filtros</h2>
+    <br>
+
+    <div class="filtragem">
+        <select data-exibir="categoria">
+            <option value="" selected disabled>-- Categorias --</option>
+            <option value="estudos">Estudos</option>
+            <option value="trabalho">Trabalho</option>
+            <option value="pessoal">Pessoal</option>
+            <option value="mostrar-todas">Mostrar Todas</option>
+        </select>
+
+        <select data-exibir="data">
+            <option value="" selected disabled>-- Data --</option>
+            <option value="hoje" >Hoje</option>
+            <option value="amanha">Amanhã</option>
+            <option value="passadas">Passadas</option>
+            <option value="mostrar-todas">Mostrar Todas</option>
+        </select>
+    
+        <select data-exibir="prioridade">
+            <option value="" selected disabled>-- Prioridade --</option>
+            <option value="alta">Alta</option>
+            <option value="media">Média</option>
+            <option value="baixa">Baixa</option>
+            <option value="mostrar-todas">Mostrar Todas</option>
+        </select>
+        
+        <select data-exibir="status">
+            <option value="" selected disabled>-- Status --</option>
+            <option value="pendentes">Pendentes</option>
+            <option value="concluidas">Concluídas</option>
+            <option value="mostrar-todas">Mostrar Todas</option>
+        </select>
+    </div>
+
+    <ul class="lista-de-tarefas"></ul>
+    
+    <template class="template-tarefa">
+        <li>
+            <div class="info-principais">
+                <input type="checkbox" data-function="check">
+                <span class="tarefa-titulo" data-function="info"></span>
+                <button class="editar-tarefa-btn" data-function="editar">Editar</button>
+                <button class="excluir-tarefa-btn" data-function="excluir">Excluir</button>
+            </div>
+
+            <div class="info-filtros">
+                <p class="t-item-categoria"></p>
+                <p class="t-item-data"></p>
+                <p class="t-item-prioridade"></p>
+            </div>
+        </li>
+    </template>
+
+    <script src="assets/script.js"></script>
+</body>
+</html>

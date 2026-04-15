@@ -1,0 +1,58 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html{ 
+    font-size: 62.5%;
+    padding: 4rem
+}
+
+ul{
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    margin-top: 1.6rem;
+}
+
+li{ 
+    font-size: 2rem;
+    background-color: red;
+    list-style-type: none;
+    max-height: 4.8rem;
+    overflow: hidden;
+    transition: all .1s ease-in-out;
+}
+
+li.ativo{
+    max-height: 9.6rem;
+}
+
+.info-principais,
+.info-filtros{ 
+    display: flex;
+    align-items: center;
+    gap: 2rem; 
+    height: 4.8rem;
+    padding: 1.6rem;
+}
+
+.info-filtros{
+    background-color: blue;
+}
+
+h1{ font-size: 3.2rem; }
+h2{ font-size: 2.4rem; }
+
+.tarefa-destaque {
+    min-height: 9.6rem;
+}
+
+/* .tarefa-destaque .tarefa-titulo {
+    font-weight: 600;
+}
+
+.tarefa-destaque .t-item-prioridade {
+    font-weight: 500;
+} */
