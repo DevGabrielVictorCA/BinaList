@@ -4,95 +4,197 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BinaList</title>
+
     <link rel="stylesheet" href="assets/style.css">
+
+    <!-- FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>BinaList</h1><br>
-    <form action="#">
-        <input type="text" id="campo-tarefa" placeholder="O que você precisa fazer?">
-        <button id="enviar-tarefa-btn">Enviar</button>
-        <button type="button" id="cancelar">Cancelar</button>
-        <br><br>
+    <main>
 
-        <select id="categorias">
-            <option value="" selected disabled>-- Categorias --</option>
-            <option value="estudos">Estudos</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="pessoal">Pessoal</option>
-        </select>
+        <!-- HEADER -->
+        <header>
+            <span id="web-name">BinaList</span>
 
-        <input type="date" id="data-tarefa">
+            <article class="logo">
+                <h2>Hoje</h2>
+                <h1>Foque no que <span>importa!</span></h1>
+            </article>
+        </header>
 
-        <select id="prioridade">
-            <option value="" selected disabled>-- Prioridade --</option>
-            <option value="alta">Alta</option>
-            <option value="media">Média</option>
-            <option value="baixa">Baixa</option>
-        </select>
-    </form>
+        <!-- FORM -->
+        <section class="S-formulario">
+            <form action="#" class="taskform">
 
-    <br><br>
-    <h2>Tarefa Destaque</h2>
-    <br>
+                <input type="text" id="campo-tarefa" placeholder="O que você precisa fazer?">
 
-    <div class="tarefa-destaque"></div>
+                <div class="filtros-e-acao">
 
-    <br><br>
-    <h2>Filtros</h2>
-    <br>
+                    <input type="checkbox" id="add-filtros-input">
 
-    <div class="filtragem">
-        <select data-exibir="categoria">
-            <option value="" selected disabled>-- Categorias --</option>
-            <option value="estudos">Estudos</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="pessoal">Pessoal</option>
-            <option value="mostrar-todas">Mostrar Todas</option>
-        </select>
+                    <div class="acoes">
+                        <div class="add-filtros">
+                            <label for="add-filtros-input">Adicionar Filtros +</label>
+                        </div>
 
-        <select data-exibir="data">
-            <option value="" selected disabled>-- Data --</option>
-            <option value="hoje" >Hoje</option>
-            <option value="amanha">Amanhã</option>
-            <option value="passadas">Passadas</option>
-            <option value="mostrar-todas">Mostrar Todas</option>
-        </select>
+                        <div class="acoes-btns">
+                            <button id="enviar-tarefa-btn">Enviar</button>
+                            <button type="button" id="cancelar">Cancelar</button>
+                        </div>
+                    </div>
+
+                    <div class="filtros">
+                        <select id="categorias" class="item-input">
+                            <option value="" selected disabled>🏷️ Categoria</option>
+                            <option value="Estudos">Estudos</option>
+                            <option value="Trabalho">Trabalho</option>
+                            <option value="Pessoal">Pessoal</option>
+                        </select>
+
+                        <div class="divider">|</div>
+
+                        <input 
+                            type="text"
+                            class="item-input"
+                            id="data-tarefa"
+                            placeholder="📅 Data"
+                            onfocus="(this.type='date')"
+                            onblur="if(!this.value)this.type='text'"
+                        >
+
+                        <div class="divider">|</div>
+
+                        <select id="prioridade" class="item-input">
+                            <option value="" selected disabled>⚡ Prioridade</option>
+                            <option value="Alta">🔴 Alta</option>
+                            <option value="Media">🟡 Média</option>
+                            <option value="Baixa">🔵 Baixa</option>
+                        </select>
+
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- PROGRESSO -->
+        <section class="S-tarefas-concluidas">
+            <p id="TC-text">Tarefas <span>Concluídas</span></p>
+
+            <div id="T-concluidas-line">
+                <div id="T-concluidas-barra"></div>
+            </div>
+        </section>
+
+        <!-- DESTAQUE -->
+        <section class="tarefa-destaque">
+            <h3 id="T-destaque-title">Agora:</h3>
+            <div class="card-tarefa-destaque"></div>
+        </section>
+
+        <!-- LISTA -->
+        <section class="lista">
+
+            <input type="checkbox" id="filtrar-demais-tarefas">
+            <input type="checkbox" id="mostrar-todas-btn">
+
+            <div class="checkboxes-tarefas">
+                <label for="filtrar-demais-tarefas">Filtros</label>
+                <label for="mostrar-todas-btn">
+                    <i data-lucide="chevron-up"></i>
+                    Outras Tarefas
+                </label>
+            </div>
+            <!-- <h2>Filtros</h2> -->
+
+
+            <div class="exibicao-todas-tarefas">
+
+                <div class="filtragem">
+                    <select data-exibir="categoria">
+                        <option value="" selected disabled>-- Categorias --</option>
+                        <option value="Estudos">Estudos</option>
+                        <option value="Trabalho">Trabalho</option>
+                        <option value="Pessoal">Pessoal</option>
+                        <option value="mostrar-todas">Mostrar Todas</option>
+                    </select>
     
-        <select data-exibir="prioridade">
-            <option value="" selected disabled>-- Prioridade --</option>
-            <option value="alta">Alta</option>
-            <option value="media">Média</option>
-            <option value="baixa">Baixa</option>
-            <option value="mostrar-todas">Mostrar Todas</option>
-        </select>
-        
-        <select data-exibir="status">
-            <option value="" selected disabled>-- Status --</option>
-            <option value="pendentes">Pendentes</option>
-            <option value="concluidas">Concluídas</option>
-            <option value="mostrar-todas">Mostrar Todas</option>
-        </select>
-    </div>
-
-    <ul class="lista-de-tarefas"></ul>
+                    <select data-exibir="data">
+                        <option value="" selected disabled>-- Data --</option>
+                        <option value="hoje">Hoje</option>
+                        <option value="amanha">Amanhã</option>
+                        <option value="passadas">Passadas</option>
+                        <option value="mostrar-todas">Mostrar Todas</option>
+                    </select>
     
-    <template class="template-tarefa">
-        <li>
-            <div class="info-principais">
-                <input type="checkbox" data-function="check">
-                <span class="tarefa-titulo" data-function="info"></span>
-                <button class="editar-tarefa-btn" data-function="editar">Editar</button>
-                <button class="excluir-tarefa-btn" data-function="excluir">Excluir</button>
+                    <select data-exibir="prioridade">
+                        <option value="" selected disabled>-- Prioridade --</option>
+                        <option value="Alta">🔴 Alta</option>
+                        <option value="Media">🟡 Média</option>
+                        <option value="Baixa">🔵 Baixa</option>
+                        <option value="mostrar-todas">Mostrar Todas</option>
+                    </select>
+    
+                    <select data-exibir="status">
+                        <option value="" selected disabled>-- Status --</option>
+                        <option value="pendentes">Pendentes</option>
+                        <option value="concluidas">Concluídas</option>
+                        <option value="mostrar-todas">Mostrar Todas</option>
+                    </select>
+                </div>
+    
+                <ul class="lista-de-tarefas"></ul>
             </div>
 
-            <div class="info-filtros">
-                <p class="t-item-categoria"></p>
-                <p class="t-item-data"></p>
-                <p class="t-item-prioridade"></p>
-            </div>
-        </li>
-    </template>
+        </section>
 
-    <script src="assets/script.js"></script>
+        <!-- TEMPLATE -->
+        <template class="template-tarefa">
+            <li>
+                <div class="info-principais">
+                    <input type="checkbox" class="check-tarefa-input" data-function="check">
+                    <h2 class="tarefa-titulo" data-function="info"></h2>
+
+                    <div class="tarefa-acoes">
+                        <button class="editar-tarefa-btn" data-function="editar">
+                            <i data-lucide="pencil"></i>
+                        </button>
+
+                        <button class="excluir-tarefa-btn" data-function="excluir">
+                            <i data-lucide="trash-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="acoes-t-destaque">
+                    <div class="check-d">
+                        <input type="checkbox" class="check-tarefa-input destaque" data-function="check" id="check-td">
+                        <label for="check-td">Marcar como Feito</label>
+                    </div>
+
+                    <button class="editar-tarefa-btn destaque" data-function="editar">
+                        <i data-lucide="pencil"></i>
+                        <span>Editar Tarefa</span>
+                    </button>
+                </div>
+
+                <div class="info-filtros">
+                    <p class="t-item-categoria"></p>
+                    <p class="t-item-data"></p>
+                    <p class="t-item-prioridade"></p>
+                </div>
+            </li>
+        </template>
+
+    </main>
+
+    <!-- ICONS -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- SCRIPT -->
+    <script src="assets/scripts/script.js"></script>
+
 </body>
 </html>

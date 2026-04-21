@@ -1,16 +1,18 @@
 // VÁRIAVEIS
-
 const campoTarefa = document.getElementById('campo-tarefa');
 const enviarTarefaBtn = document.getElementById('enviar-tarefa-btn');
 const cancelarBtn = document.getElementById('cancelar');
+
+const createTaskForm = document.querySelector('.S-formulario');
 
 const selectCategoria = document.getElementById('categorias');
 const selectData = document.getElementById('data-tarefa');
 const selectPrioridade = document.getElementById('prioridade');
 
+const addFiltrosBtn = document.getElementById('add-filtros-input');
 const filtragem = document.querySelector('.filtragem');
 
-const cardTarefaDestaque = document.querySelector('.tarefa-destaque')
+const cardTarefaDestaque = document.querySelector('.card-tarefa-destaque')
 const listaDeTarefas = document.querySelector('.lista-de-tarefas');
 const templateTarefa = document.querySelector('.template-tarefa');
 
@@ -28,9 +30,9 @@ const filtros = {
 };
 
 const scoreTarefa = {
-    alta: 100,
-    media: 50,
-    baixa: 10
+    Alta: 100,
+    Media: 50,
+    Baixa: 10
 }
 
 // FUNÇÕES
@@ -38,13 +40,20 @@ const scoreTarefa = {
 function pegarIndexTarefa(id){ return arrayTarefas.findIndex(tarefa => tarefa.id === id); }
 
 function pegarDatas() {
-    const hoje = new Date().toISOString().split('T')[0];
-    
+    const formatar = d => d.toLocaleDateString('en-CA');
+
+    const hojeDate = new Date();
+    const hoje = formatar(hojeDate);
+
     const amanhaDate = new Date();
     amanhaDate.setDate(amanhaDate.getDate() + 1);
-    const amanha = amanhaDate.toISOString().split('T')[0];
+    const amanha = formatar(amanhaDate);
 
-    return { hoje, amanha };
+    const ontemDate = new Date();
+    ontemDate.setDate(ontemDate.getDate() - 1);
+    const ontem = formatar(ontemDate);
+
+    return { hoje, amanha, ontem };
 }
 
 function pegarDataScore(dataTarefa){
@@ -68,10 +77,10 @@ function gerarTarefaScore(tarefa){ return((scoreTarefa[tarefa.prioridade] || 0) 
 function criarLiTarefa(tarefa, isDestaque = false){
     const clone = templateTarefa.content.cloneNode(true);
 
+    const{hoje, amanha, ontem} = pegarDatas();
+
     const li = clone.querySelector('li');
     li.dataset.id = tarefa.id
-
-    if (isDestaque) li.classList.add('tarefa-destaque');
 
     const checkbox = clone.querySelector('input[type="checkbox"]');
     checkbox.checked = tarefa.completo;
@@ -80,15 +89,41 @@ function criarLiTarefa(tarefa, isDestaque = false){
     tarefaTitulo.textContent = tarefa.titulo;
 
     const itemCategoria = clone.querySelector('.t-item-categoria');
+    if(tarefa.categoria === '')itemCategoria.style.display = 'none'; 
     itemCategoria.textContent = tarefa.categoria;
 
-    const itemData = clone.querySelector('.t-item-data'); 
-    itemData.textContent = tarefa.data;
+    const itemData = clone.querySelector('.t-item-data');
+    switch (tarefa.data){
+        case hoje: itemData.textContent = 'Hoje'; break;
+        case amanha: itemData.textContent = 'Amanhã'; break;
+        case ontem: itemData.textContent = 'Ontem'; break;
+        default: 
+            const partes = tarefa.data.split('-');
+            itemData.textContent = `${partes[2]}/${partes[1]}/${partes[0]}`; 
+            break;
+    } 
 
     const itemPrioridade = clone.querySelector('.t-item-prioridade');
     itemPrioridade.textContent = tarefa.prioridade;
 
+    estilizarTasks(isDestaque, li, tarefa)
+
     return li;
+}
+
+function estilizarTasks(isDestaque, li, tarefa){
+     if (isDestaque){
+        li.classList.add('tarefa-destaque');
+        li.classList.add('ativo');
+    }
+
+    if(tarefa.prioridade === 'Alta') li.classList.add('p-alta');
+    if(tarefa.prioridade === 'Media') li.classList.add('p-media');
+    if(tarefa.prioridade === 'Baixa') li.classList.add('p-baixa');
+    if(tarefa.completo === true){
+        li.classList.remove('p-alta', 'p-media', 'p-baixa');
+        li.classList.add('p-concluido')
+    }
 }
 
 function renderizarTarefaDestaque(){
@@ -115,6 +150,7 @@ function renderizarTarefas(array = arrayTarefas){
     listaDeTarefas.innerHTML = '';
     array.forEach(tarefa => { listaDeTarefas.appendChild(criarLiTarefa(tarefa)) });
     renderizarTarefaDestaque()
+    lucide.createIcons();
 }
 
 function filtragemTarefas(){
@@ -176,7 +212,7 @@ function enviarTarefa(){
         tarefa.titulo = campoTarefa.value.trim();
         tarefa.categoria = selectCategoria.value;
         tarefa.data = selectData.value || hoje;
-        tarefa.prioridade = selectPrioridade.value || 'media';
+        tarefa.prioridade = selectPrioridade.value || 'Media';
     }
     else {
         const novaTarefa = {
@@ -185,16 +221,20 @@ function enviarTarefa(){
             completo: false,
             categoria: selectCategoria.value,
             data: selectData.value || hoje,
-            prioridade: selectPrioridade.value || 'media'
+            prioridade: selectPrioridade.value || 'Media'
         }
         arrayTarefas.push(novaTarefa)
     }
+
+    addFiltrosBtn.checked = false;
     
     limparCampos()
     atualizarUI()
 }
 
 function limparCampos() {
+    addFiltrosBtn.checked = false;
+
     campoTarefa.value = '';
     selectCategoria.value = '';
     selectData.value = '';
@@ -202,11 +242,11 @@ function limparCampos() {
 
     enviarTarefaBtn.textContent = 'Enviar';
     tarefaEmEdicao = null;
-    campoTarefa.focus();
 }
 
 function cancelar(){
     limparCampos()
+    createTaskForm.classList.remove('ativo');
 }
 
 function excluir(index){
@@ -216,6 +256,8 @@ function excluir(index){
 
 function editar(li, index){
     const tarefaTitulo = li.querySelector('.tarefa-titulo');
+
+    addFiltrosBtn.checked = true;
 
     campoTarefa.value = tarefaTitulo.textContent;
     selectCategoria.value = arrayTarefas[index].categoria || '';
@@ -292,8 +334,21 @@ filtragem.addEventListener('change', (e)=>{
     filtragemTarefas();
 })
 
+campoTarefa.addEventListener('focus', () => {
+    createTaskForm.classList.add('ativo');
+    // console.log('ativo')
+});
+
+//LUCIDE ICONS
+
+document.addEventListener("DOMContentLoaded", () => {
+    lucide.createIcons();
+});
+
 // INICIALIZAÇÃO
 
 carregarTarefasLocal();
 filtragemTarefas()
 campoTarefa.focus();
+
+// console.log(arrayTarefas)

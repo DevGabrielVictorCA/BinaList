@@ -4,55 +4,638 @@
     box-sizing: border-box;
 }
 
-html{ 
-    font-size: 62.5%;
-    padding: 4rem
+:root{
+    --green-400: #18813F;
+    --green-300: #22C55E;
+    --green-100: #C7FFE4;
+    
+    --green-line: #4ADE80;
+
+    --red-300: #CA2B2B;
+    --red-200: #D53C3C;
+    --red-100: #DB4B4B;
+
+    --yellow-300: #CF8405;
+    --yellow-200: #F59E0B;
+    --yellow-100: #f5ad30;
+
+    --blue-300: #0B46A9;
+    --blue-200: #3B82F6;
+    --blue-100: #5c96f3;
+
+    --text-color-500: #111827;
+    --text-color-400: #374151;
+    --text-color-300: #6B7280;
+
+    --purple-text: #6366F1;
+    --purple-effect: #787BFA; 
+
+    --bg-color: #F3F4F6;
+    --high-bg-color: #FFFFFF; 
+
+    --size-h1: 3rem;
+    --size-h2: 2.4rem;
+    --size-h3: 2rem;
+
+    --size-body: 1.6rem;
+    --size-small: 1.4rem;
+    --size-caption: 1.2rem;
+
+    --bold: 700;
+    --semibold: 600;
+    --normal: 500;
+    --regular: 400;
 }
 
-ul{
-    display: flex;
-    flex-direction: column;
-    gap: .4rem;
-    margin-top: 1.6rem;
+/* =========================
+   BASE
+========================= */
+
+html { font-size: 62.5%; }
+
+body { 
+    padding: 3.6rem; /*32%*/
+    background-color: var(--bg-color);
+    color: var(--text-color-500);
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-li{ 
-    font-size: 2rem;
-    background-color: red;
-    list-style-type: none;
-    max-height: 4.8rem;
+
+/* =========================
+   HEADER / LOGO
+========================= */
+
+#web-name {
+    font-size: var(--size-h2);
+    font-weight: var(--semibold);
+    color: var(--purple-text);
+    margin-bottom: 3.6rem;
+    letter-spacing: 0.1rem;
+}
+
+.logo {
+    margin: 2rem 0 3.2rem;
+    text-align: center;
+}
+
+.logo h2 {
+    font-size: var(--size-h2);
+    font-weight: var(--medium);
+}
+
+.logo h1 {
+    font-size: var(--size-h1);
+    font-weight: var(--semibold);
+}
+
+.logo h1 span { 
+    font-weight: bold; 
+    color: var(--purple-text);
+}
+
+
+/* =========================
+   TASK FORM
+========================= */
+
+#campo-tarefa {
+    width: 100%;
+    padding: 0.8rem 1.6rem;
+    border-radius: 1rem;
+    border: 1.5px solid var(--text-color-300);
+    outline: none;
+}
+
+#campo-tarefa::placeholder {
+    font-size: var(--size-caption);
+    font-weight: var(--regular);
+    opacity: 0.8;
+}
+
+#campo-tarefa:focus {
+    border-color: var(--purple-effect);
+}
+
+
+/* =========================
+   FILTROS E AÇÕES
+========================= */
+
+.S-formulario{
     overflow: hidden;
-    transition: all .1s ease-in-out;
+    max-height: 3.5rem;
+    transition: all .2s ease-in-out;
 }
 
-li.ativo{
-    max-height: 9.6rem;
+.filtros-e-acao {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    width: 100%;
+    margin-top: 0.8rem;
+    position: relative;
+    overflow: hidden;
+    transform: translateY(-120%);
+    opacity: 0;
+    position: relative;
+    z-index: -1;
+    transition: all .2s ease-in-out;
 }
 
-.info-principais,
-.info-filtros{ 
+.S-formulario.ativo{ max-height: 13rem; }
+
+.S-formulario.ativo .filtros-e-acao{
+    transform: translateY(0);
+    opacity: 1;
+    z-index: 1;
+}
+
+/* FILTROS */
+
+.filtros {
     display: flex;
     align-items: center;
-    gap: 2rem; 
-    height: 4.8rem;
-    padding: 1.6rem;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 0.6rem;
+    border: 1.5px solid var(--text-color-300); 
+    border-radius: 1rem; 
+    background-color: var(--high-bg-color);
+    transform: translateY(100%) scale(0);
+    opacity: 0;
+    transition: all 0.1s ease-in-out;
 }
 
-.info-filtros{
-    background-color: blue;
+.item-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: var(--size-caption);
+    font-weight: var(--medium);
+    text-align: center;
+    color: var(--text-color-400);
+    opacity: 0.8;
+    cursor: pointer;
+    appearance: none; 
+    -webkit-appearance: none;
 }
 
-h1{ font-size: 3.2rem; }
-h2{ font-size: 2.4rem; }
+.divider {
+    margin: 0 0.4rem;
+    color: var(--text-color-300);
+}
+
+/* AÇÔES */
+
+.acoes {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    width: 100%;
+    gap: 0;
+    position: relative;
+    min-height: 3.6rem;
+    transition: min-height 0.2s ease-in-out;
+}
+
+.add-filtros { padding: 0.8rem 0; }
+
+#add-filtros-input{ display: none; }
+
+label[for="add-filtros-input"],
+label[for="mostrar-todas-btn"] {
+    padding: 0.9rem 1rem;
+    font-size: var(--size-caption);
+    font-weight: var(--semibold);
+    color: var(--purple-text);
+    background-color: transparent;
+    border: none;
+    border-radius: 2.4rem;
+    transition: all 0.2s ease-in-out;
+}
+
+
+/* =========================
+   EXIBIR FILTROS (CHECKED)
+========================= */
+
+#add-filtros-input:checked ~ .acoes { min-height: 7.2rem; }
+
+#add-filtros-input:checked ~ .acoes label[for="add-filtros-input"],
+#mostrar-todas-btn:checked ~ .checkboxes-tarefas label[for="mostrar-todas-btn"]{
+    background-color: var(--purple-effect);
+    color: var(--bg-color);
+}
+
+#add-filtros-input:checked ~ .filtros { 
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+
+/* =========================
+   BOTÕES FORMULÁRIO
+========================= */
+
+.acoes-btns button {
+    padding: 0.8rem 1rem;
+    margin: 0 0.2rem;
+    font-size: var(--size-caption);
+    font-weight: var(--semibold);
+    border-radius: 0.8rem;
+    border: 1.5px solid var(--purple-effect);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#enviar-tarefa-btn {
+    background-color: var(--purple-effect);
+    color: var(--bg-color);
+}
+
+#cancelar {
+    background-color: var(--high-bg-color);
+    color: var(--purple-effect);
+}
+
+.acoes button:active { transform: scale(0.96); }
+
+
+/* =========================
+   TAREFAS CONCLUÍDAS
+========================= */
+
+.S-tarefas-concluidas { 
+    margin: 2.4rem; 
+}
+
+#TC-text {
+    font-size: var(--size-caption);
+    font-weight: var(--regular);
+    color: var(--text-color-400);
+}
+
+#TC-text span {
+    font-weight: var(--semibold); 
+    color: var(--green-300);
+}
+
+#T-concluidas-line {
+    width: 100%;
+    height: 2rem;
+    margin-top: 0.8rem;
+    border: 0.2rem solid var(--green-line);
+    border-radius: 3.2rem;
+}
+
+/* =========================
+   TAREFA DESTAQUE
+========================= */
+
+li.tarefa-destaque .tarefa-titulo { 
+    font-size: var(--size-h3); 
+    font-weight: var(--semibold);
+}
 
 .tarefa-destaque {
-    min-height: 9.6rem;
+    margin: .8rem 0 2.4rem;
+    min-height: 17.5rem;
 }
 
-/* .tarefa-destaque .tarefa-titulo {
-    font-weight: 600;
+li.tarefa-destaque .info-filtros{ padding-bottom: 2.4rem; }
+
+#T-destaque-title{
+    font-size: var(--size-h3);
+    font-weight: var(--semibold);
+    color: var(--text-color-400);
 }
 
-.tarefa-destaque .t-item-prioridade {
-    font-weight: 500;
-} */
+.acoes-t-destaque { 
+    display: none; 
+    align-items: center;
+    justify-content: space-between;
+    padding: 2.4rem 2.4rem 1.6rem;
+}
+
+label[for="check-td"]{ font-size: var(--size-caption); }
+
+.check-d,
+.editar-tarefa-btn.destaque{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .8rem;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+li.tarefa-destaque .editar-tarefa-btn{ display: none; }
+
+/* Estados da tarefa destaque */
+
+li.tarefa-destaque .acoes-t-destaque,
+li.tarefa-destaque .check-tarefa-input.destaque,
+li.tarefa-destaque .editar-tarefa-btn.destaque { display: flex; }
+
+li.tarefa-destaque .check-tarefa-input { display: none; }
+
+li.tarefa-destaque .tarefa-titulo {
+    transform: translateX(0);
+    text-align: left;
+    color: var(--red-200);
+}
+
+li.tarefa-destaque::before { display: none; }
+
+/* Borda por prioridade (destaque) */
+
+li.tarefa-destaque.p-alta  { border: 0.2rem solid var(--red-100); }
+li.tarefa-destaque.p-media { border: 0.2rem solid var(--yellow-100); }
+li.tarefa-destaque.p-baixa { border: 0.2rem solid var(--blue-100); }
+
+li.tarefa-destaque.p-alta label[for="check-td"],
+li.tarefa-destaque.p-alta .editar-tarefa-btn.destaque{ color: var(--red-200); }
+
+li.tarefa-destaque.p-media label[for="check-td"],
+li.tarefa-destaque.p-media .editar-tarefa-btn.destaque{ color: var(--yellow-200); }
+
+li.tarefa-destaque.p-baixa label[for="check-td"],
+li.tarefa-destaque .editar-tarefa-btn.destaque{ color: var(--blue-200); }
+
+
+/* Barra dos filtros*/
+li.tarefa-destaque .info-filtros::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-53%);
+    width: 64%;
+    height: 0.2rem;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+}
+
+/* =========================
+   LISTA DE TAREFAS
+========================= */
+
+.checkboxes-tarefas{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 1.6rem;
+}
+
+.checkboxes-tarefas label{
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .8rem 1.2rem;
+    border-radius: 1.6rem;
+    font-weight: var(--semibold);
+    font-size: var(--size-small);
+    /* border: .1rem, solid red; */
+}
+
+.checkboxes-tarefas label svg{
+    width: 2rem;
+    height: 2rem;
+}
+
+#mostrar-todas-btn:checked ~ .checkboxes-tarefas label svg{ transform: rotate(180deg); }
+
+
+#mostrar-todas-btn:checked ~ .exibicao-todas-tarefas ul,
+#mostrar-todas-btn:checked ~ .checkboxes-tarefas label[for="filtrar-demais-tarefas"]{ display: flex; }
+
+#mostrar-todas-btn,
+#filtrar-demais-tarefas,
+label[for="filtrar-demais-tarefas"]{ display: none; }
+
+#filtrar-demais-tarefas:checked ~ .exibicao-todas-tarefas .filtragem{display: flex;}
+
+ul {
+    display: none;
+    flex-direction: column;
+    margin-top: 1.6rem;
+    padding: 0 0.8rem;
+    gap: 0.4rem;
+}
+
+li { 
+    position: relative;
+    list-style: none;
+    border-radius: 1rem;
+    background-color: var(--high-bg-color);
+    box-shadow: 0.2rem 0.3rem 0.2rem rgba(0, 0, 0, 0.2);
+
+    max-height: 4.8rem;
+    overflow: hidden;
+    transition: all 0.1s ease-in-out;
+}
+
+li.ativo { max-height: 9.6rem; }
+
+.filtragem{
+    display: none;
+    flex-direction: column;
+}
+
+/* Barra lateral */
+
+li::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0.8rem;
+    height: 100%;
+    background-color: var(--text-color-500);
+}
+
+
+/* =========================
+   CONTEÚDO INTERNO TASKS
+========================= */
+
+.info-principais,
+.info-filtros { 
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 2rem;
+    height: 4.8rem;
+    padding: 1.6rem 2.4rem;
+}
+
+.tarefa-titulo {
+    position: relative;
+    width: 100%;
+    font-size: var(--size-body);
+    font-weight: var(--semibold);
+    text-align: center;
+    transform: translateX(1em);
+    overflow: auto;
+}
+
+.tarefa-acoes {
+    display: flex;
+    gap: 1.6rem;
+}
+
+svg { pointer-events: none; }
+
+
+/* =========================
+   BOTÕES DE AÇÃO TASKS
+========================= */
+
+.tarefa-acoes button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.tarefa-acoes button svg,
+.editar-tarefa-btn.destaque svg{
+    width: 2rem;
+    height: 2rem;
+}
+
+
+/* =========================
+   FILTROS TASKS
+========================= */
+
+.info-filtros { 
+    position: relative; 
+    font-size: var(--size-caption);
+    color: var(--text-color-400);
+    white-space: pre-wrap;
+    text-align: center;
+}
+
+.info-filtros::before {
+    content: '';
+    position: absolute;
+    top: -0.9rem;
+    left: 50%;
+    transform: translateX(-54%);
+    width: 43%;
+    height: 0.2rem;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+}
+
+li.ativo .info-filtros::before { opacity: 1;}
+
+
+/* =========================
+   TAGS / ICONES
+========================= */
+
+.t-item-categoria::before { content: "🏷️ "; }
+.t-item-data::before      { content: "📅 "; }
+
+li.p-alta  .t-item-prioridade::before { content: "🔴 "; }
+li.p-media .t-item-prioridade::before { content: "🟡 "; }
+li.p-baixa .t-item-prioridade::before { content: "🔵 "; }
+
+
+/* =========================
+   BOTÃO EDITAR TASK
+========================= */
+
+.editar-tarefa-btn { opacity: 0; }
+
+li.ativo .editar-tarefa-btn { opacity: 1; }
+
+
+/* =========================
+   PRIORIDADES
+========================= */
+
+/* ALTA */
+
+li.p-alta::before,
+li.p-alta.ativo .info-filtros::before { 
+    background-color: var(--red-200); 
+}
+
+li.p-alta .tarefa-titulo { 
+    color: var(--red-300);
+}
+
+li.p-alta .tarefa-acoes button svg,
+li.p-alta .acoes-t-destaque button svg { 
+    color: var(--red-200);
+}
+
+
+/* MÉDIA */
+
+li.p-media::before,
+li.p-media.ativo .info-filtros::before { 
+    background-color: var(--yellow-200); 
+}
+
+li.p-media .tarefa-titulo { 
+    color: var(--yellow-300);
+}
+
+li.p-media .tarefa-acoes button svg,
+li.p-media .acoes-t-destaque button svg { 
+    color: var(--yellow-200);
+}
+
+
+/* BAIXA */
+
+li.p-baixa::before,
+li.p-baixa.ativo .info-filtros::before { 
+    background-color: var(--blue-200); 
+}
+
+li.p-baixa .tarefa-titulo { 
+    color: var(--blue-300);
+}
+
+li.p-baixa .tarefa-acoes button svg,
+li.p-baixa .acoes-t-destaque button svg { 
+    color: var(--blue-200);
+}
+
+
+/* =========================
+   CONCLUÍDO
+========================= */
+
+li.p-concluido {
+    background-color: var(--green-100);
+}
+
+li.p-concluido::before,
+li.p-concluido.ativo .info-filtros::before { 
+    background-color: var(--green-300); 
+}
+
+li.p-concluido .tarefa-titulo {
+    color: var(--green-400);
+    opacity: 0.7;
+    text-decoration: line-through;
+}
+
+li.p-concluido .tarefa-acoes button svg { color: var(--green-300); }
