@@ -107,7 +107,7 @@ body {
 }
 
 #campo-tarefa::placeholder {
-    font-size: var(--size-caption);
+    font-size: var(--size-small);
     font-weight: var(--regular);
     opacity: 0.8;
 }
@@ -177,7 +177,7 @@ body {
     border: none;
     background: transparent;
     outline: none;
-    font-size: var(--size-caption);
+    font-size: var(--size-small);
     font-weight: var(--medium);
     text-align: center;
     color: var(--text-color-400);
@@ -402,7 +402,7 @@ li.tarefa-destaque .info-filtros::before {
     padding: .8rem 1.2rem;
     border-radius: 1.6rem;
     font-weight: var(--semibold);
-    font-size: var(--size-small);
+    font-size: var(--size-caption);
     /* border: .1rem, solid red; */
 }
 
