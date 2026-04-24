@@ -83,8 +83,9 @@
         <section class="S-tarefas-concluidas">
             <p id="TC-text">Tarefas <span>Concluídas</span></p>
 
-            <div id="T-concluidas-line">
+            <div id="T-concluidas-linha">
                 <div id="T-concluidas-barra"></div>
+                <span id="T-concluidas-text"></span>
             </div>
         </section>
 
@@ -154,7 +155,11 @@
         <template class="template-tarefa">
             <li>
                 <div class="info-principais">
-                    <input type="checkbox" class="check-tarefa-input" data-function="check">
+                    <!-- <input type="checkbox" class="check-tarefa-input" data-function="check"> -->
+                    <label class="checkbox normal">
+                            <input type="checkbox" class="check-tarefa-input destaque" data-function="check" id="check-td">
+                            <span class="box"></span>
+                    </label>
                     <h2 class="tarefa-titulo" data-function="info"></h2>
 
                     <div class="tarefa-acoes">
@@ -170,8 +175,14 @@
 
                 <div class="acoes-t-destaque">
                     <div class="check-d">
-                        <input type="checkbox" class="check-tarefa-input destaque" data-function="check" id="check-td">
-                        <label for="check-td">Marcar como Feito</label>
+                        <!-- <input type="checkbox" class="check-tarefa-input destaque" data-function="check" id="check-td">
+                        <label for="check-td">Marcar como Feito</label> -->
+
+                        <label class="checkbox destaque">
+                            <input type="checkbox" class="check-tarefa-input destaque" data-function="check" id="check-td">
+                            <span class="box"></span>
+                            <span class="check-legenda">Marcar como Feito</span>
+                        </label>
                     </div>
 
                     <button class="editar-tarefa-btn destaque" data-function="editar">

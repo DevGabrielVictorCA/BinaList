@@ -1,13 +1,14 @@
 // VÁRIAVEIS
 const campoTarefa = document.getElementById('campo-tarefa');
+const createTaskForm = document.querySelector('.S-formulario');
 const enviarTarefaBtn = document.getElementById('enviar-tarefa-btn');
 const cancelarBtn = document.getElementById('cancelar');
-
-const createTaskForm = document.querySelector('.S-formulario');
 
 const selectCategoria = document.getElementById('categorias');
 const selectData = document.getElementById('data-tarefa');
 const selectPrioridade = document.getElementById('prioridade');
+
+const barraProgressoConcluidas = document.getElementById('T-concluidas-barra');
 
 const addFiltrosBtn = document.getElementById('add-filtros-input');
 const filtragem = document.querySelector('.filtragem');
@@ -36,6 +37,18 @@ const scoreTarefa = {
 }
 
 // FUNÇÕES
+
+function barraDeProgresso(){
+    const tarefasConcluidas = arrayTarefas.filter(tarefa => tarefa.completo).length;
+    const quantidadeTarefas = arrayTarefas.length;
+    const tarefasCTexto = document.getElementById('T-concluidas-text');
+
+    const porcentagemConcluidas = (tarefasConcluidas / quantidadeTarefas) * 100;
+
+    barraProgressoConcluidas.style.width = `${porcentagemConcluidas}%`
+    tarefasCTexto.textContent = `${tarefasConcluidas} de ${quantidadeTarefas}`
+    // console.log(tarefasConcluidas);
+}
 
 function pegarIndexTarefa(id){ return arrayTarefas.findIndex(tarefa => tarefa.id === id); }
 
@@ -187,6 +200,7 @@ function filtragemTarefas(){
     });
 
     renderizarTarefas(filtrados);
+    barraDeProgresso()
 }
 
 function enviarTarefa(){
@@ -251,6 +265,7 @@ function cancelar(){
 
 function excluir(index){
     arrayTarefas.splice(index, 1);
+    createTaskForm.classList.remove('ativo');
     atualizarUI()
 }
 
@@ -266,11 +281,13 @@ function editar(li, index){
 
     enviarTarefaBtn.textContent = 'Atualizar'
     tarefaEmEdicao = index;
+    createTaskForm.classList.add('ativo');
     campoTarefa.focus();
 }
 
 function check (e, index){
     arrayTarefas[index].completo = e.target.checked;
+    createTaskForm.classList.remove('ativo');
     atualizarUI()
 }
 
@@ -279,13 +296,15 @@ function exibirInformacoes(li){
     const jaAtivo = li.classList.contains('ativo');
     tarefas.forEach(tarefa => tarefa.classList.remove('ativo'));
     if(!jaAtivo) li.classList.add('ativo');
+    createTaskForm.classList.remove('ativo');
 }
 
 function acoesTarefas(e){
     const li = e.target.closest('li');
-    const itemSelecionado = e.target.dataset.function;
+    const btn = e.target.closest('[data-function]');
+    const itemSelecionado = btn?.dataset.function;
 
-    if (!li || !itemSelecionado) return;
+    if (!li || !btn) return;
 
     const idItem = Number(li.dataset.id);
     const indexItem = pegarIndexTarefa(idItem);
@@ -336,7 +355,6 @@ filtragem.addEventListener('change', (e)=>{
 
 campoTarefa.addEventListener('focus', () => {
     createTaskForm.classList.add('ativo');
-    // console.log('ativo')
 });
 
 //LUCIDE ICONS
