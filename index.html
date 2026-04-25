@@ -29,7 +29,10 @@
         <section class="S-formulario">
             <form action="#" class="taskform">
 
-                <input type="text" id="campo-tarefa" placeholder="O que você precisa fazer?">
+                <div class="input-wrapper">
+                    <input type="text" id="campo-tarefa" placeholder="O que você precisa fazer?">
+                    <i data-lucide="pencil" class="icon"></i>
+                </div>
 
                 <div class="filtros-e-acao">
 
@@ -48,7 +51,7 @@
 
                     <div class="filtros">
                         <select id="categorias" class="item-input">
-                            <option value="" selected disabled>🏷️ Categoria</option>
+                            <option value="" selected disabled>&#x1F3F7;&#xFE0F; Categoria</option>
                             <option value="Estudos">Estudos</option>
                             <option value="Trabalho">Trabalho</option>
                             <option value="Pessoal">Pessoal</option>
@@ -60,7 +63,7 @@
                             type="text"
                             class="item-input"
                             id="data-tarefa"
-                            placeholder="📅 Data"
+                            placeholder="&#x1F4C5; Data"
                             onfocus="(this.type='date')"
                             onblur="if(!this.value)this.type='text'"
                         >
@@ -68,10 +71,10 @@
                         <div class="divider">|</div>
 
                         <select id="prioridade" class="item-input">
-                            <option value="" selected disabled>⚡ Prioridade</option>
-                            <option value="Alta">🔴 Alta</option>
-                            <option value="Media">🟡 Média</option>
-                            <option value="Baixa">🔵 Baixa</option>
+                            <option value="" selected disabled>&#x26A1; Prioridade</option>
+                            <option value="Alta">&#x1F534; Alta</option>
+                            <option value="Media">&#x1F7E1; Média</option>
+                            <option value="Baixa">&#x1F535; Baixa</option>
                         </select>
 
                     </div>
@@ -102,7 +105,11 @@
             <input type="checkbox" id="mostrar-todas-btn">
 
             <div class="checkboxes-tarefas">
-                <label for="filtrar-demais-tarefas">Filtros</label>
+                <label for="filtrar-demais-tarefas">
+                    <i data-lucide="arrow-up-z-a"></i>
+                    Filtros
+                </label>
+
                 <label for="mostrar-todas-btn">
                     <i data-lucide="chevron-up"></i>
                     Outras Tarefas
@@ -114,36 +121,50 @@
             <div class="exibicao-todas-tarefas">
 
                 <div class="filtragem">
-                    <select data-exibir="categoria">
-                        <option value="" selected disabled>-- Categorias --</option>
-                        <option value="Estudos">Estudos</option>
-                        <option value="Trabalho">Trabalho</option>
-                        <option value="Pessoal">Pessoal</option>
-                        <option value="mostrar-todas">Mostrar Todas</option>
-                    </select>
-    
-                    <select data-exibir="data">
-                        <option value="" selected disabled>-- Data --</option>
-                        <option value="hoje">Hoje</option>
-                        <option value="amanha">Amanhã</option>
-                        <option value="passadas">Passadas</option>
-                        <option value="mostrar-todas">Mostrar Todas</option>
-                    </select>
-    
-                    <select data-exibir="prioridade">
-                        <option value="" selected disabled>-- Prioridade --</option>
-                        <option value="Alta">🔴 Alta</option>
-                        <option value="Media">🟡 Média</option>
-                        <option value="Baixa">🔵 Baixa</option>
-                        <option value="mostrar-todas">Mostrar Todas</option>
-                    </select>
-    
-                    <select data-exibir="status">
-                        <option value="" selected disabled>-- Status --</option>
-                        <option value="pendentes">Pendentes</option>
-                        <option value="concluidas">Concluídas</option>
-                        <option value="mostrar-todas">Mostrar Todas</option>
-                    </select>
+                    <div class="filtragem-card">
+                        <div>
+                            <label for="filtrar-categoria">&#x1F3F7;&#xFE0F; Categoria: </label>
+                            <select data-exibir="categoria" id="filtrar-categoria">
+                                <option value="mostrar-todas">-- Mostrar Todas --</option>
+                                <option value="Estudos">Estudos</option>
+                                <option value="Trabalho">Trabalho</option>
+                                <option value="Pessoal">Pessoal</option>
+                            </select>
+                        </div>
+        
+                        <div>
+                            <label for="filtrar-data">&#x1F4C5; Data: </label>
+                            <select data-exibir="data" id="filtrar-data">
+                                <option value="mostrar-todas">-- Mostrar Todas --</option>
+                                <option value="hoje">Hoje</option>
+                                <option value="amanha">Amanhã</option>
+                                <option value="passadas">Passadas</option>
+                            </select>
+                        </div>
+        
+                        <div>
+                            <label for="filtrar-prioridade">&#x26A1; Prioridade: </label>
+                            <select data-exibir="prioridade" id="filtrar-prioridade">
+                                <option value="mostrar-todas">-- Mostrar Todas --</option>
+                                <option value="Alta">&#x1F534; Alta</option>
+                                <option value="Media">&#x1F7E1; Média</option>
+                                <option value="Baixa">&#x1F535; Baixa</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="filtrar-status">&#x1F4CA; Status: </label>
+                            <select data-exibir="status" id="filtrar-status">
+                                <option value="mostrar-todas">-- Mostrar Todas --</option>
+                                <option value="pendentes">Pendentes</option>
+                                <option value="concluidas">Concluídas</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <button id="reverter-filtros-btn" onclick="limparFiltros()">Reverter FIltros</button>
+                        </div>
+                    </div>
                 </div>
     
                 <ul class="lista-de-tarefas"></ul>
@@ -175,9 +196,6 @@
 
                 <div class="acoes-t-destaque">
                     <div class="check-d">
-                        <!-- <input type="checkbox" class="check-tarefa-input destaque" data-function="check" id="check-td">
-                        <label for="check-td">Marcar como Feito</label> -->
-
                         <label class="checkbox destaque">
                             <input type="checkbox" class="check-tarefa-input destaque" data-function="check" id="check-td">
                             <span class="box"></span>

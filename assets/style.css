@@ -98,6 +98,23 @@ body {
    TASK FORM
 ========================= */
 
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.input-wrapper .icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--text-color-300);
+}
+
 #campo-tarefa {
     width: 100%;
     padding: 0.8rem 1.6rem;
@@ -112,9 +129,8 @@ body {
     opacity: 0.8;
 }
 
-#campo-tarefa:focus {
-    border-color: var(--purple-effect);
-}
+#campo-tarefa:focus { border-color: var(--purple-effect); }
+#campo-tarefa:focus ~ .icon{ color: var(--purple-text);}
 
 
 /* =========================
@@ -209,8 +225,7 @@ body {
 
 #add-filtros-input{ display: none; }
 
-label[for="add-filtros-input"],
-label[for="mostrar-todas-btn"] {
+label[for="add-filtros-input"] {
     padding: 0.9rem 1rem;
     font-size: var(--size-caption);
     font-weight: var(--semibold);
@@ -228,8 +243,7 @@ label[for="mostrar-todas-btn"] {
 
 #add-filtros-input:checked ~ .acoes { min-height: 7.2rem; }
 
-#add-filtros-input:checked ~ .acoes label[for="add-filtros-input"],
-#mostrar-todas-btn:checked ~ .checkboxes-tarefas label[for="mostrar-todas-btn"]{
+#add-filtros-input:checked ~ .acoes label[for="add-filtros-input"]{
     background-color: var(--purple-effect);
     color: var(--bg-color);
 }
@@ -260,7 +274,7 @@ label[for="mostrar-todas-btn"] {
     color: var(--bg-color);
 }
 
-#cancelar {
+#cancelar{
     background-color: var(--high-bg-color);
     color: var(--purple-effect);
 }
@@ -314,7 +328,7 @@ label[for="mostrar-todas-btn"] {
     z-index: 10;
     color: var(--text-color-400);
     font-weight: var(--regular);
-    /* font-size: var(--size-caption); */
+    font-size: var(--size-caption);
 }
 
 /* =========================
@@ -452,7 +466,7 @@ li.tarefa-destaque .editar-tarefa-btn.destaque{ color: var(--blue-200); }
 li.tarefa-destaque .info-filtros::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: -10px;
     left: 50%;
     transform: translateX(-53%);
     width: 64%;
@@ -461,9 +475,78 @@ li.tarefa-destaque .info-filtros::before {
     transition: opacity 0.1s ease-in-out;
 }
 
+
 /* =========================
-   LISTA DE TAREFAS
+   FILTRAGEM DAS TAREFAS
 ========================= */
+
+.filtragem{
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    margin-top: .4rem;
+    width: 75%;
+    max-height: 0;
+    overflow: hidden;
+    transition: all .2s ease-in-out;
+}
+
+.filtragem-card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .8rem;
+    flex-direction: column;
+    background-color: var(--high-bg-color);
+    border-radius: 1.6rem;
+    width: 100%;
+    border: 1.5px solid var(--text-color-300);
+    padding: 1.6rem 2rem;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: all .2s ease-in-out;
+}
+
+.filtragem-card div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.filtragem-card div label{
+    font-size: var(--size-caption);
+    font-weight: var(--regular);
+    color: var(--text-color-400);
+}
+
+.filtragem-card select{
+    background-color: var(--high-bg-color);
+    border: 1.5px solid var(--text-color-300);
+    border-radius: 1rem;
+    color: var(--text-color-400);
+    font-size: var(--size-caption);
+    outline: none;
+    padding: .4rem .8rem;
+    appearance: none;
+    text-align: center;
+    -webkit-appearance: none;
+}
+
+#reverter-filtros-btn{
+    font-size: var(--size-caption);
+    font-weight: var(--semibold);
+    color: var(--purple-text);
+    background-color: var(--high-bg-color);
+    border: 1.5px solid var(--purple-effect);
+    border-radius: .8rem;
+    padding: .8rem 1.2rem;
+    margin-top: .8rem;
+    width: 100%;
+    transition: transform .2s ease;
+}
+
+#reverter-filtros-btn:active{ transform: scale(0.96); }
 
 .checkboxes-tarefas{
     display: flex;
@@ -476,18 +559,29 @@ li.tarefa-destaque .info-filtros::before {
     display: flex;
     align-items: center;
     gap: .4rem;
-    padding: .8rem 1.2rem;
-    border-radius: 1.6rem;
+    padding: .6rem 1.2rem;
+    border-radius: 1rem;
     font-weight: var(--semibold);
     font-size: var(--size-caption);
+    color: var(--purple-text);
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+}
+
+label[for="filtrar-demais-tarefas"]{ border: 1.5px solid var(--purple-effect); }
+
+#filtrar-demais-tarefas:checked ~ .checkboxes-tarefas label[for="filtrar-demais-tarefas"],
+#mostrar-todas-btn:checked ~ .checkboxes-tarefas label[for="mostrar-todas-btn"]{
+    background-color: var(--purple-effect);
+    color: var(--bg-color);
 }
 
 .checkboxes-tarefas label svg{
-    width: 2rem;
-    height: 2rem;
+    width: 1.2rem;
+    height: 1.2rem;
 }
 
-#mostrar-todas-btn:checked ~ .checkboxes-tarefas label svg{ transform: rotate(180deg); }
+#mostrar-todas-btn:checked ~ .checkboxes-tarefas label[for="mostrar-todas-btn"] svg{ transform: rotate(180deg); }
 
 
 #mostrar-todas-btn:checked ~ .exibicao-todas-tarefas ul,
@@ -497,7 +591,16 @@ li.tarefa-destaque .info-filtros::before {
 #filtrar-demais-tarefas,
 label[for="filtrar-demais-tarefas"]{ display: none; }
 
-#filtrar-demais-tarefas:checked ~ .exibicao-todas-tarefas .filtragem{display: flex;}
+#filtrar-demais-tarefas:checked ~ .exibicao-todas-tarefas .filtragem{ max-height: 40rem;}
+
+#filtrar-demais-tarefas:checked ~ .exibicao-todas-tarefas .filtragem .filtragem-card{ 
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* =========================
+   LISTA DE TAREFAS
+========================= */
 
 ul {
     display: none;
@@ -522,11 +625,6 @@ li {
 }
 
 li.ativo { max-height: 9.6rem; }
-
-.filtragem{
-    display: none;
-    flex-direction: column;
-}
 
 /* Barra lateral */
 

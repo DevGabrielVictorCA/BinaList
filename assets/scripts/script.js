@@ -17,6 +17,9 @@ const cardTarefaDestaque = document.querySelector('.card-tarefa-destaque')
 const listaDeTarefas = document.querySelector('.lista-de-tarefas');
 const templateTarefa = document.querySelector('.template-tarefa');
 
+const mostrarTodasTarefasBtn = document.getElementById('mostrar-todas-btn');
+const filtrarTodasarefasBtn = document.getElementById('filtrar-demais-tarefas');
+
 let tarefaEmEdicao = null;
 
 // ARRAYS E OBJETOS
@@ -199,8 +202,57 @@ function filtragemTarefas(){
         return categoriaSelecionada && prioridadeSelecionada && dataSelecionada && statusSelecionado;
     });
 
+    filtrados.sort((a, b) => {
+
+        if (a.completo && !b.completo) return 1;
+        if (!a.completo && b.completo) return -1;
+
+        const ordemPrioridade = {
+            'Alta': 1,
+            'Media': 2,
+            'Baixa': 3
+        };
+
+        return ordemPrioridade[a.prioridade] - ordemPrioridade[b.prioridade]; 
+    });
+
+
+    const qtdFiltros = document.querySelector('label[for=filtrar-demais-tarefas]')
+
     renderizarTarefas(filtrados);
+    const totalFiltros = contarFiltrosAtivos()
+
+    qtdFiltros.innerHTML = `
+        <i data-lucide="arrow-up-z-a"></i>
+        Filtros ${totalFiltros || ''}
+    `
+    lucide.createIcons();
     barraDeProgresso()
+}
+
+function limparFiltros(){
+    filtros.categoria = 'mostrar-todas';
+    filtros.data = 'mostrar-todas';
+    filtros.prioridade = 'mostrar-todas';
+    filtros.status = 'mostrar-todas';
+
+    document.getElementById('filtrar-categoria').value = 'mostrar-todas';
+    document.getElementById('filtrar-data').value = 'mostrar-todas';
+    document.getElementById('filtrar-prioridade').value = 'mostrar-todas';
+    document.getElementById('filtrar-status').value = 'mostrar-todas';
+
+    filtragemTarefas()
+}
+
+function contarFiltrosAtivos() {
+    let contador = 0;
+
+    if (filtros.categoria !== 'mostrar-todas') contador++;
+    if (filtros.prioridade !== 'mostrar-todas') contador++;
+    if (filtros.data !== 'mostrar-todas') contador++;
+    if (filtros.status !== 'mostrar-todas') contador++;
+
+    return contador;
 }
 
 function enviarTarefa(){
@@ -265,7 +317,6 @@ function cancelar(){
 
 function excluir(index){
     arrayTarefas.splice(index, 1);
-    createTaskForm.classList.remove('ativo');
     atualizarUI()
 }
 
@@ -281,13 +332,11 @@ function editar(li, index){
 
     enviarTarefaBtn.textContent = 'Atualizar'
     tarefaEmEdicao = index;
-    createTaskForm.classList.add('ativo');
     campoTarefa.focus();
 }
 
 function check (e, index){
     arrayTarefas[index].completo = e.target.checked;
-    createTaskForm.classList.remove('ativo');
     atualizarUI()
 }
 
@@ -296,7 +345,6 @@ function exibirInformacoes(li){
     const jaAtivo = li.classList.contains('ativo');
     tarefas.forEach(tarefa => tarefa.classList.remove('ativo'));
     if(!jaAtivo) li.classList.add('ativo');
-    createTaskForm.classList.remove('ativo');
 }
 
 function acoesTarefas(e){
@@ -357,6 +405,24 @@ campoTarefa.addEventListener('focus', () => {
     createTaskForm.classList.add('ativo');
 });
 
+document.addEventListener('click', (e)=>{
+    const addFiltros = document.getElementById('add-filtros-input');
+    if(!createTaskForm.contains(e.target)){
+        createTaskForm.classList.remove('ativo')
+        addFiltros.checked = false;
+    };
+
+    const clicouNaLabel = e.target.closest('label[for="filtrar-demais-tarefas"]');
+    const clicouNoCheckbox = e.target === filtrarTodasarefasBtn;
+    const clicouNaArea = filtragem.contains(e.target);
+
+    if (clicouNaLabel || clicouNoCheckbox) return;
+
+    if (!clicouNaArea){
+        filtrarTodasarefasBtn.checked = false;
+    }
+})
+
 //LUCIDE ICONS
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -368,5 +434,3 @@ document.addEventListener("DOMContentLoaded", () => {
 carregarTarefasLocal();
 filtragemTarefas()
 campoTarefa.focus();
-
-// console.log(arrayTarefas)
