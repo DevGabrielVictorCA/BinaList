@@ -227,7 +227,7 @@ body {
 
 label[for="add-filtros-input"] {
     padding: 0.9rem 1rem;
-    font-size: var(--size-caption);
+    font-size: var(--size-small);
     font-weight: var(--semibold);
     color: var(--purple-text);
     background-color: transparent;
@@ -484,7 +484,7 @@ li.tarefa-destaque .info-filtros::before {
     display: flex;
     justify-content: center;
     margin: 0 auto;
-    margin-top: .4rem;
+    margin-top: .8rem;
     width: 90%;
     max-height: 0;
     overflow: hidden;
@@ -527,7 +527,7 @@ li.tarefa-destaque .info-filtros::before {
     border: 1.5px solid var(--text-color-300);
     border-radius: 1rem;
     color: var(--text-color-400);
-    font-size: var(--size-small);
+    font-size: var(--size-caption);
     outline: none;
     padding: .4rem .8rem;
     appearance: none;
