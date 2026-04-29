@@ -365,7 +365,7 @@ label[for="filtrar-demais-tarefas"]:hover,
    TAREFAS CONCLUÍDAS
 ========================= */
 
-.S-tarefas-concluidas { margin: 2.4rem; }
+.S-tarefas-concluidas { margin: 2.4rem 0 1.6rem; }
 
 #TC-text {
     font-size: var(--size-caption);
@@ -438,6 +438,7 @@ li.tarefa-destaque .tarefa-titulo {
     font-size: var(--size-h3);
     font-weight: var(--semibold);
     color: var(--text-color-400);
+    margin-top: 1.6rem;
 }
 
 .nenhuma-tarefa-container{

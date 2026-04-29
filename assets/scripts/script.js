@@ -178,11 +178,13 @@ function textoNenhumaTarefa(tarefasPendentes){
     const clone = templateNenhumaTarefa.content.cloneNode(true);
     const nenhumaTarefaTexto = clone.getElementById('nenhuma-tarefa-text')
     const labelMostrarTodas = document.querySelector('label[for="mostrar-todas-btn"]');
+    const containerTconcluidas = document.querySelector('.S-tarefas-concluidas')
 
     if (arrayTarefas.length === 0) {
         nenhumaTarefaTexto.textContent = 'Você não possui nenhuma tarefa'
-        cardTarefaDestaque.appendChild(clone)
-        labelMostrarTodas.style.display = 'none'
+        cardTarefaDestaque.appendChild(clone);
+        labelMostrarTodas.style.display = 'none';
+        containerTconcluidas.style.display = 'none';
         return;
     }
 
@@ -193,6 +195,7 @@ function textoNenhumaTarefa(tarefasPendentes){
     }
 
     labelMostrarTodas.style.display = 'flex'
+    containerTconcluidas.style.display = 'block';
 }
 
 function renderizarTarefas(array = arrayTarefas) {
