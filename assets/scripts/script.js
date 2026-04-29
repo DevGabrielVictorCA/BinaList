@@ -182,20 +182,26 @@ function textoNenhumaTarefa(tarefasPendentes){
 
     if (arrayTarefas.length === 0) {
         nenhumaTarefaTexto.textContent = 'Você não possui nenhuma tarefa'
-        cardTarefaDestaque.appendChild(clone);
         labelMostrarTodas.style.display = 'none';
+        cardTarefaDestaque.appendChild(clone);
         containerTconcluidas.style.display = 'none';
         return;
     }
-
+    
+    if(arrayTarefas.length < 2){
+        mostrarTodasTarefasBtn.checked = false;
+        labelMostrarTodas.style.display = 'none';
+        return;
+    }
+    
     if (!tarefasPendentes.length) {
         nenhumaTarefaTexto.textContent = 'Você concluiu todas as tarefas'
         cardTarefaDestaque.appendChild(clone)
         return;
     }
-
-    labelMostrarTodas.style.display = 'flex'
+    
     containerTconcluidas.style.display = 'block';
+    labelMostrarTodas.style.display = 'flex'
 }
 
 function renderizarTarefas(array = arrayTarefas) {
