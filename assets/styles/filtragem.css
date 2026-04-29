@@ -1,0 +1,89 @@
+/* =========================
+   TAREFA DESTAQUE
+========================= */
+
+li.p-alta .checkbox .box{ border-color: var(--red-200);}
+li.p-media .checkbox .box{ border-color: var(--yellow-200);}
+li.p-baixa .checkbox .box{ border-color: var(--blue-200);}
+
+/* Borda por prioridade (destaque) */
+
+li.tarefa-destaque.p-alta  { border: 0.2rem solid var(--red-100); }
+li.tarefa-destaque.p-media { border: 0.2rem solid var(--yellow-100); }
+li.tarefa-destaque.p-baixa { border: 0.2rem solid var(--blue-100); }
+
+li.tarefa-destaque.p-alta .checkbox.destaque .check-legenda,
+li.tarefa-destaque.p-alta .editar-tarefa-btn.destaque{ color: var(--red-200); }
+
+li.tarefa-destaque.p-media .checkbox.destaque .check-legenda,
+li.tarefa-destaque.p-media .editar-tarefa-btn.destaque{ color: var(--yellow-200); }
+
+li.tarefa-destaque.p-baixa .checkbox.destaque .check-legenda,
+li.tarefa-destaque .editar-tarefa-btn.destaque{ color: var(--blue-200); }
+
+/* =========================
+   TAGS / ICONES
+========================= */
+
+.t-item-categoria::before { content: "🏷️ "; }
+.t-item-data::before      { content: "📅 "; }
+
+li.p-alta  .t-item-prioridade::before { content: "🔴 "; }
+li.p-media .t-item-prioridade::before { content: "🟡 "; }
+li.p-baixa .t-item-prioridade::before { content: "🔵 "; }
+
+
+/* =========================
+   PRIORIDADES
+========================= */
+
+/* ALTA */
+
+li.p-alta::before,
+li.p-alta.ativo .info-filtros::before { background-color: var(--red-200); }
+
+li.p-alta .tarefa-titulo,
+li.p-alta.tarefa-destaque .tarefa-titulo { color: var(--red-300); }
+
+li.p-alta .tarefa-acoes button svg,
+li.p-alta .acoes-t-destaque button svg { color: var(--red-200); }
+
+/* MÉDIA */
+
+li.p-media::before,
+li.p-media.ativo .info-filtros::before { background-color: var(--yellow-200); }
+
+li.p-media .tarefa-titulo,
+li.p-media.tarefa-destaque .tarefa-titulo { color: var(--yellow-300); }
+
+li.p-media .tarefa-acoes button svg,
+li.p-media .acoes-t-destaque button svg { color: var(--yellow-200); }
+
+
+/* BAIXA */
+
+li.p-baixa::before,
+li.p-baixa.ativo .info-filtros::before { background-color: var(--blue-200); }
+
+li.p-baixa .tarefa-titulo,
+li.p-baixa.tarefa-destaque .tarefa-titulo { color: var(--blue-300); }
+
+li.p-baixa .tarefa-acoes button svg,
+li.p-baixa .acoes-t-destaque button svg { color: var(--blue-200); }
+
+/* =========================
+   CONCLUÍDO
+========================= */
+
+li.p-concluido { background-color: var(--green-100); }
+
+li.p-concluido::before,
+li.p-concluido.ativo .info-filtros::before { background-color: var(--green-300); }
+
+li.p-concluido .tarefa-titulo {
+    color: var(--green-400);
+    opacity: 0.7;
+    text-decoration: line-through;
+}
+
+li.p-concluido .tarefa-acoes button svg { color: var(--green-300); }

@@ -1,229 +1,293 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <!-- BASE -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BinaList</title>
 
-    <link rel="stylesheet" href="assets/style.css?v=3">
+    <title>BinaList — To-do minimalista focado em produtividade e execução</title>
+    <meta name="description" content="BinaList é uma to-do list minimalista criada para aumentar o foco e reduzir distrações. Organize tarefas por prioridade, data e categoria e acompanhe seu progresso de forma simples e eficiente.">
 
-    <!-- FONT -->
+    <meta name="theme-color" content="#F3F4F6">
+
+    <!-- SEO -->
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="BinaList">
+    <!-- <link rel="canonical" href="https://seudominio.com/"> -->
+
+    <!-- OPEN GRAPH (Facebook / WhatsApp / LinkedIn) -->
+    <meta property="og:title" content="BinaList — Produtividade sem distrações">
+    <meta property="og:description" content="Uma to-do list minimalista focada em execução real de tarefas. Menos distração, mais foco e produtividade.">
+    <meta property="og:type" content="website">
+    <!-- <meta property="og:url" content="https://seudominio.com/"> -->
+    <!-- <meta property="og:image" content="https://seudominio.com/assets/preview.png"> -->
+
+    <!-- PRELOAD (performance) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- FONTE -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- STYLES -->
+    <link rel="stylesheet" href="assets/styles/filtragem.css">
+    <link rel="stylesheet" href="assets/styles/style.css?v=4">
+    <link rel="stylesheet" href="assets/styles/responsividade.css">
+
+    <!-- ICON (opcional, mas recomendado para branding) -->
+    <!-- <link rel="icon" href="assets/favicon.ico"> -->
 </head>
 <body>
-    <main>
+    <div class="container">
 
         <!-- HEADER -->
         <header>
             <span id="web-name">BinaList</span>
 
             <article class="logo">
+                <!-- H1 principal adicionado (SEO) -->
+                <h1 class="visually-hidden">BinaList - Organizador de tarefas</h1>
+
                 <h2>Hoje</h2>
                 <h1>Foque no que <span>importa!</span></h1>
             </article>
         </header>
 
-        <!-- FORM -->
-        <section class="S-formulario">
-            <form action="#" class="taskform">
+        <main>
+            <!-- FORM -->
+            <section class="S-formulario" aria-labelledby="form-title">
+                <h2 id="form-title" class="visually-hidden">Criar tarefa</h2>
 
-                <div class="input-wrapper">
-                    <input type="text" id="campo-tarefa" placeholder="O que você precisa fazer?">
-                    <i data-lucide="pencil" class="icon"></i>
-                </div>
+                <form action="#" class="taskform">
 
-                <div class="filtros-e-acao">
-
-                    <input type="checkbox" id="add-filtros-input">
-
-                    <div class="acoes">
-                        <div class="add-filtros">
-                            <label for="add-filtros-input">Adicionar Filtros +</label>
-                        </div>
-
-                        <div class="acoes-btns">
-                            <button id="enviar-tarefa-btn">Enviar</button>
-                            <button type="button" id="cancelar">Cancelar</button>
-                        </div>
-                    </div>
-
-                    <div class="filtros">
-                        <select id="categorias" class="item-input">
-                            <option value="" selected disabled>&#x1F3F7;&#xFE0F; Categoria</option>
-                            <option value="Estudos">Estudos</option>
-                            <option value="Trabalho">Trabalho</option>
-                            <option value="Pessoal">Pessoal</option>
-                        </select>
-
-                        <div class="divider">|</div>
+                    <div class="input-wrapper">
+                        <!-- label acessível -->
+                        <label for="campo-tarefa" class="visually-hidden">Digite sua tarefa</label>
 
                         <input 
-                            type="text"
-                            class="item-input"
-                            id="data-tarefa"
-                            placeholder="&#x1F4C5; Data"
-                            onfocus="(this.type='date')"
-                            onblur="if(!this.value)this.type='text'"
+                            type="text" 
+                            id="campo-tarefa" 
+                            placeholder="O que você precisa fazer?"
+                            required
                         >
 
-                        <div class="divider">|</div>
-
-                        <select id="prioridade" class="item-input">
-                            <option value="" selected disabled>&#x26A1; Prioridade</option>
-                            <option value="Alta">&#x1F534; Alta</option>
-                            <option value="Media">&#x1F7E1; Média</option>
-                            <option value="Baixa">&#x1F535; Baixa</option>
-                        </select>
-
+                        <i data-lucide="pencil" class="icon" aria-hidden="true"></i>
                     </div>
-                </div>
-            </form>
-        </section>
 
-        <!-- PROGRESSO -->
-        <section class="S-tarefas-concluidas">
-            <p id="TC-text">Tarefas <span>Concluídas</span></p>
+                    <!-- aria-live para feedback -->
+                    <div class="texto-de-erro-container" aria-live="polite">
+                        <span id="texto-de-erro"></span>
+                    </div>
 
-            <div id="T-concluidas-linha">
-                <div id="T-concluidas-barra"></div>
-                <span id="T-concluidas-text"></span>
-            </div>
-        </section>
+                    <div class="filtros-e-acao">
 
-        <!-- DESTAQUE -->
-        <section class="tarefa-destaque">
-            <h3 id="T-destaque-title">Agora:</h3>
-            <div class="card-tarefa-destaque"></div>
-        </section>
+                        <input type="checkbox" id="add-filtros-input">
 
-        <!-- LISTA -->
-        <section class="lista">
+                        <div class="acoes">
+                            <div class="add-filtros">
+                                <label for="add-filtros-input">Adicionar Filtros +</label>
+                            </div>
 
-            <input type="checkbox" id="filtrar-demais-tarefas">
-            <input type="checkbox" id="mostrar-todas-btn">
+                            <div class="acoes-btns">
+                                <button id="enviar-tarefa-btn" type="submit">Enviar</button>
+                                <button type="button" id="cancelar">Cancelar</button>
+                            </div>
+                        </div>
 
-            <div class="checkboxes-tarefas">
-                <label for="filtrar-demais-tarefas">
-                    <i data-lucide="arrow-up-z-a"></i>
-                    Filtros
-                </label>
-
-                <label for="mostrar-todas-btn">
-                    <i data-lucide="chevron-up"></i>
-                    Outras Tarefas
-                </label>
-            </div>
-            <!-- <h2>Filtros</h2> -->
-
-
-            <div class="exibicao-todas-tarefas">
-
-                <div class="filtragem">
-                    <div class="filtragem-card">
-                        <div>
-                            <label for="filtrar-categoria">&#x1F3F7;&#xFE0F; Categoria: </label>
-                            <select data-exibir="categoria" id="filtrar-categoria">
-                                <option value="mostrar-todas">-- Mostrar Todas --</option>
+                        <div class="filtros">
+                            <!-- labels invisíveis -->
+                            <label for="categorias" class="visually-hidden">Categoria</label>
+                            <select id="categorias" class="item-input">
+                                <option value="" selected disabled>&#x1F3F7;&#xFE0F; Categoria</option>
                                 <option value="Estudos">Estudos</option>
                                 <option value="Trabalho">Trabalho</option>
                                 <option value="Pessoal">Pessoal</option>
                             </select>
-                        </div>
-        
-                        <div>
-                            <label for="filtrar-data">&#x1F4C5; Data: </label>
-                            <select data-exibir="data" id="filtrar-data">
-                                <option value="mostrar-todas">-- Mostrar Todas --</option>
-                                <option value="hoje">Hoje</option>
-                                <option value="amanha">Amanhã</option>
-                                <option value="passadas">Passadas</option>
-                            </select>
-                        </div>
-        
-                        <div>
-                            <label for="filtrar-prioridade">&#x26A1; Prioridade: </label>
-                            <select data-exibir="prioridade" id="filtrar-prioridade">
-                                <option value="mostrar-todas">-- Mostrar Todas --</option>
+
+                            <div class="divider" aria-hidden="true">|</div>
+
+                            <label for="data-tarefa" class="visually-hidden">Data</label>
+                            <input 
+                                type="text"
+                                class="item-input"
+                                id="data-tarefa"
+                                placeholder="&#x1F4C5; Data"
+                                onfocus="(this.type='date')"
+                                onblur="if(!this.value)this.type='text'"
+                            >
+
+                            <div class="divider" aria-hidden="true">|</div>
+
+                            <label for="prioridade" class="visually-hidden">Prioridade</label>
+                            <select id="prioridade" class="item-input">
+                                <option value="" selected disabled>&#x26A1; Prioridade</option>
                                 <option value="Alta">&#x1F534; Alta</option>
                                 <option value="Media">&#x1F7E1; Média</option>
                                 <option value="Baixa">&#x1F535; Baixa</option>
                             </select>
                         </div>
-
-                        <div>
-                            <label for="filtrar-status">&#x1F4CA; Status: </label>
-                            <select data-exibir="status" id="filtrar-status">
-                                <option value="mostrar-todas">-- Mostrar Todas --</option>
-                                <option value="pendentes">Pendentes</option>
-                                <option value="concluidas">Concluídas</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <button id="reverter-filtros-btn" onclick="limparFiltros()">Reverter FIltros</button>
-                        </div>
                     </div>
+                </form>
+            </section>
+
+            <!-- PROGRESSO -->
+            <section class="S-tarefas-concluidas" aria-labelledby="tc-title">
+                <h2 id="tc-title" class="visually-hidden">Progresso das tarefas</h2>
+
+                <p id="TC-text">Tarefas <span>Concluídas</span></p>
+
+                <div id="T-concluidas-linha"
+                     role="progressbar"
+                     aria-valuemin="0"
+                     aria-valuemax="100">
+                    <div id="T-concluidas-barra"></div>
+                    <span id="T-concluidas-text" aria-live="polite"></span>
                 </div>
-    
-                <ul class="lista-de-tarefas"></ul>
-            </div>
+            </section>
 
-        </section>
+            <!-- DESTAQUE -->
+            <section class="tarefa-destaque-container" aria-labelledby="destaque-title">
+                <h3 id="T-destaque-title">Agora: </h3>
+                <h2 id="destaque-title" class="visually-hidden">Tarefa em destaque</h2>
 
-        <!-- TEMPLATE -->
-        <template class="template-tarefa">
-            <li>
-                <div class="info-principais">
-                    <!-- <input type="checkbox" class="check-tarefa-input" data-function="check"> -->
-                    <label class="checkbox normal">
-                            <input type="checkbox" class="check-tarefa-input destaque" data-function="check" id="check-td">
-                            <span class="box"></span>
+                <div class="card-tarefa-destaque"></div>
+            </section>
+
+            <!-- LISTA -->
+            <section class="lista" aria-labelledby="lista-title">
+                <h2 id="lista-title" class="visually-hidden">Lista de tarefas</h2>
+
+                <input type="checkbox" id="filtrar-demais-tarefas">
+                <input type="checkbox" id="mostrar-todas-btn">
+
+                <div class="checkboxes-tarefas" role="navigation" aria-label="Controles da lista">
+                    <label for="filtrar-demais-tarefas">
+                        <i data-lucide="arrow-up-z-a" aria-hidden="true"></i>
+                        Filtros
                     </label>
-                    <h2 class="tarefa-titulo" data-function="info"></h2>
 
-                    <div class="tarefa-acoes">
-                        <button class="editar-tarefa-btn" data-function="editar">
-                            <i data-lucide="pencil"></i>
-                        </button>
-
-                        <button class="excluir-tarefa-btn" data-function="excluir">
-                            <i data-lucide="trash-2"></i>
-                        </button>
-                    </div>
+                    <label for="mostrar-todas-btn">
+                        <i data-lucide="chevron-up" aria-hidden="true"></i>
+                        Outras Tarefas
+                    </label>
                 </div>
 
-                <div class="acoes-t-destaque">
-                    <div class="check-d">
-                        <label class="checkbox destaque">
-                            <input type="checkbox" class="check-tarefa-input destaque" data-function="check" id="check-td">
+                <div class="exibicao-todas-tarefas">
+
+                    <div class="filtragem">
+                        <div class="filtragem-card">
+
+                            <div>
+                                <label for="filtrar-categoria">&#x1F3F7;&#xFE0F; Categoria: </label>
+                                <select data-exibir="categoria" id="filtrar-categoria">
+                                    <option value="mostrar-todas">-- Mostrar Todas --</option>
+                                    <option value="Estudos">Estudos</option>
+                                    <option value="Trabalho">Trabalho</option>
+                                    <option value="Pessoal">Pessoal</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="filtrar-data">&#x1F4C5; Data: </label>
+                                <select data-exibir="data" id="filtrar-data">
+                                    <option value="mostrar-todas">-- Mostrar Todas --</option>
+                                    <option value="hoje">Hoje</option>
+                                    <option value="amanha">Amanhã</option>
+                                    <option value="passadas">Passadas</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="filtrar-prioridade">&#x26A1; Prioridade: </label>
+                                <select data-exibir="prioridade" id="filtrar-prioridade">
+                                    <option value="mostrar-todas">-- Mostrar Todas --</option>
+                                    <option value="Alta">&#x1F534; Alta</option>
+                                    <option value="Media">&#x1F7E1; Média</option>
+                                    <option value="Baixa">&#x1F535; Baixa</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="filtrar-status">&#x1F4CA; Status: </label>
+                                <select data-exibir="status" id="filtrar-status">
+                                    <option value="mostrar-todas">-- Mostrar Todas --</option>
+                                    <option value="pendentes">Pendentes</option>
+                                    <option value="concluidas">Concluídas</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <button id="reverter-filtros-btn" type="button">Reverter Filtros</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="lista-container">
+                        <ul class="lista-de-tarefas"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TEMPLATE -->
+            <template class="template-tarefa">
+                <li>
+                    <div class="info-principais">
+                        <label class="checkbox normal">
+                            <input type="checkbox" class="check-tarefa-input destaque" data-function="check">
                             <span class="box"></span>
-                            <span class="check-legenda">Marcar como Feito</span>
                         </label>
+
+                        <h2 class="tarefa-titulo" data-function="info"></h2>
+
+                        <div class="tarefa-acoes">
+                            <button class="editar-tarefa-btn" data-function="editar" aria-label="Editar tarefa">
+                                <i data-lucide="pencil"></i>
+                            </button>
+
+                            <button class="excluir-tarefa-btn" data-function="excluir" aria-label="Excluir tarefa">
+                                <i data-lucide="trash-2"></i>
+                            </button>
+                        </div>
                     </div>
 
-                    <button class="editar-tarefa-btn destaque" data-function="editar">
-                        <i data-lucide="pencil"></i>
-                        <span>Editar Tarefa</span>
-                    </button>
+                    <div class="acoes-t-destaque">
+                        <div class="check-d">
+                            <label class="checkbox destaque">
+                                <input type="checkbox" class="check-tarefa-input destaque" data-function="check">
+                                <span class="box"></span>
+                                <span class="check-legenda">Marcar como Feito</span>
+                            </label>
+                        </div>
+
+                        <button class="editar-tarefa-btn destaque" data-function="editar" aria-label="Editar tarefa">
+                            <i data-lucide="pencil"></i>
+                            <span>Editar Tarefa</span>
+                        </button>
+                    </div>
+
+                    <div class="info-filtros">
+                        <p class="t-item-categoria"></p>
+                        <p class="t-item-data"></p>
+                        <p class="t-item-prioridade"></p>
+                    </div>
+                </li>
+            </template>
+
+            <template class="template-nenhuma-tarefa">
+                <div class="nenhuma-tarefa-container">
+                    <p id="nenhuma-tarefa-text"></p>
+                    <button id="criar-tarefa-btn" type="button">Criar</button>
                 </div>
+            </template>
+        </main>
 
-                <div class="info-filtros">
-                    <p class="t-item-categoria"></p>
-                    <p class="t-item-data"></p>
-                    <p class="t-item-prioridade"></p>
-                </div>
-            </li>
-        </template>
+        <footer>
+            <p>Uma <span>tarefa</span> de cada vez.</p>
+        </footer>
+    </div>
 
-    </main>
-
-    <!-- ICONS -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-
-    <!-- SCRIPT -->
-    <script src="assets/scripts/script.js"></script>
-
+    <script type="module" src="assets/scripts/script.js"></script>
 </body>
 </html>

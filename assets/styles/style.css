@@ -33,13 +33,13 @@
     --bg-color: #F3F4F6;
     --high-bg-color: #FFFFFF; 
 
-    --size-h1: 3rem;
-    --size-h2: 2.4rem;
-    --size-h3: 2rem;
+    --size-h1: clamp(3rem, 4.5vw, 4rem);
+    --size-h2: clamp(2.4rem, 3.5vw, 3.2rem);
+    --size-h3: clamp(1.8rem, 3vw, 2.4rem);
 
-    --size-body: 1.6rem;
-    --size-small: 1.4rem;
-    --size-caption: 1.2rem;
+    --size-body: clamp(1.6rem, 2vw, 1.8rem);
+    --size-small: clamp(1.4rem, 1.6vw, 1.6rem);
+    --size-caption: clamp(1.2rem, 1.2vw, 1.4rem);
 
     --bold: 700;
     --semibold: 600;
@@ -53,23 +53,40 @@
 
 html { font-size: 62.5%; }
 
-body { 
-    padding: 3.6rem; /*32%*/
+body {
+    margin: 0;
     background-color: var(--bg-color);
     color: var(--text-color-500);
-    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
 }
 
+.container {
+    min-height: 100vh; 
+    padding: 3.6rem 3.6rem 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main { flex: 1; }
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+}
 
 /* =========================
    HEADER / LOGO
 ========================= */
 
 #web-name {
-    font-size: var(--size-h2);
+    display: block;
+    font-size: var(--size-h3);
     font-weight: var(--semibold);
     color: var(--purple-text);
-    margin-bottom: 3.6rem;
+    margin-bottom: 4.8rem;
     letter-spacing: 0.1rem;
 }
 
@@ -102,6 +119,9 @@ body {
     position: relative;
     display: inline-block;
     width: 100%;
+    background-color: var(--high-bg-color);
+    border-radius: 1rem;
+    border: 1.5px solid var(--text-color-300);
 }
 
 .input-wrapper .icon {
@@ -116,22 +136,67 @@ body {
 }
 
 #campo-tarefa {
-    width: 100%;
-    padding: 0.8rem 1.6rem;
+    width: 95%;
+    padding: 0.7rem 1.6rem;
     border-radius: 1rem;
-    border: 1.5px solid var(--text-color-300);
+    margin: .1rem;
+    border: 0;
     outline: none;
 }
 
 #campo-tarefa::placeholder {
+    height: 100%;
     font-size: var(--size-small);
     font-weight: var(--regular);
     opacity: 0.8;
 }
 
-#campo-tarefa:focus { border-color: var(--purple-effect); }
+.input-wrapper:focus-within{ border-color: var(--purple-effect); }
 #campo-tarefa:focus ~ .icon{ color: var(--purple-text);}
 
+.texto-de-erro-container{
+    display: flex;
+    max-height: 0;
+    overflow: hidden;
+    transition: all .2s ease-in-out;
+}
+
+.texto-de-erro-container.ativo { 
+    max-height: 5rem; 
+    transition: all .2s ease-in-out;
+}
+
+#texto-de-erro{ 
+    display: block;
+    font-size: var(--size-caption);
+    padding: .4rem .8rem 0;
+    font-weight: var(--normal);
+    color: var(--red-100); 
+    font-weight: var(--normal);
+    width: 100%;
+    max-height: 0;
+    transform: translateY(-100%);
+}
+
+.texto-de-erro-container.ativo #texto-de-erro{ 
+    transform: translateY(0);
+    max-height: 2rem;
+}
+
+ 
+#campo-tarefa.erro-form ~ .icon{ color: var(--red-100);}
+.input-wrapper:has(#campo-tarefa.erro-form) { border-color: var(--red-200);}
+
+.input-wrapper:has(#campo-tarefa.erro-form){ animation: animacao-erro 0.35s ease-in-out; }
+
+@keyframes animacao-erro {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-6px); }
+  40%  { transform: translateX(6px); }
+  60%  { transform: translateX(-6px); }
+  80%  { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
 
 /* =========================
    FILTROS E AÇÕES
@@ -161,7 +226,7 @@ body {
     transition: all .2s ease-in-out;
 }
 
-.S-formulario.ativo{ max-height: 13rem; }
+.S-formulario.ativo{ max-height: 20rem; }
 
 .S-formulario.ativo .filtros-e-acao{
     transform: translateY(0);
@@ -221,21 +286,21 @@ body {
     transition: min-height 0.2s ease-in-out;
 }
 
-.add-filtros { padding: 0.8rem 0; }
-
 #add-filtros-input{ display: none; }
 
 label[for="add-filtros-input"] {
+    display: block;
     padding: 0.9rem 1rem;
-    font-size: var(--size-small);
+    font-size: var(--size-caption);
     font-weight: var(--semibold);
     color: var(--purple-text);
     background-color: transparent;
     border: none;
     border-radius: 2.4rem;
     transition: all 0.2s ease-in-out;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);    
+    cursor: pointer;
 }
-
 
 /* =========================
    EXIBIR FILTROS (CHECKED)
@@ -246,6 +311,7 @@ label[for="add-filtros-input"] {
 #add-filtros-input:checked ~ .acoes label[for="add-filtros-input"]{
     background-color: var(--purple-effect);
     color: var(--bg-color);
+    text-shadow: none;
 }
 
 #add-filtros-input:checked ~ .filtros { 
@@ -258,7 +324,8 @@ label[for="add-filtros-input"] {
    BOTÕES FORMULÁRIO
 ========================= */
 
-.acoes-btns button {
+.acoes-btns button,
+#criar-tarefa-btn {
     padding: 0.8rem 1rem;
     margin: 0 0.2rem;
     font-size: var(--size-caption);
@@ -269,7 +336,18 @@ label[for="add-filtros-input"] {
     transition: all 0.2s ease;
 }
 
-#enviar-tarefa-btn {
+.acoes-btns button:hover,
+#criar-tarefa-btn:hover,
+label[for="add-filtros-input"]:hover,
+label[for="mostrar-todas-btn"]:hover,
+label[for="filtrar-demais-tarefas"]:hover,
+#reverter-filtros-btn:hover{ 
+    opacity: .8; 
+    transform: scale(1.01);
+}
+
+#enviar-tarefa-btn,
+#criar-tarefa-btn {
     background-color: var(--purple-effect);
     color: var(--bg-color);
 }
@@ -279,7 +357,8 @@ label[for="add-filtros-input"] {
     color: var(--purple-effect);
 }
 
-.acoes button:active { transform: scale(0.96); }
+.acoes button:active,
+#criar-tarefa-btn:active { transform: scale(0.96); }
 
 
 /* =========================
@@ -335,21 +414,51 @@ label[for="add-filtros-input"] {
    TAREFA DESTAQUE
 ========================= */
 
-li.tarefa-destaque .tarefa-titulo { 
-    font-size: var(--size-h3); 
-    font-weight: var(--semibold);
+.tarefa-destaque-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
 }
 
-.tarefa-destaque {
-    margin: .8rem 0 2.4rem;
+li.tarefa-destaque{
+    position: relative;
+    margin: 1.2rem auto;
     min-height: 17.5rem;
+    position: relative;
 }
+
+li.tarefa-destaque .tarefa-titulo {
+    font-size: var(--size-body); 
+    font-weight: var(--normal);
+}
+
 
 #T-destaque-title{
     font-size: var(--size-h3);
     font-weight: var(--semibold);
     color: var(--text-color-400);
 }
+
+.nenhuma-tarefa-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.6rem;
+    flex-direction: column;
+    margin: auto 0;
+    min-height: 19.9rem;
+    width: 100%;
+
+}
+
+#nenhuma-tarefa-text{
+    text-align: center;
+    font-size: var(--size-caption);
+    font-weight: var(--regular);
+    color: var(--text-color-300);
+}
+
 
 li.tarefa-destaque .info-principais{ margin-top: .8rem;}
 li.tarefa-destaque .info-filtros{ padding-bottom: 2.4rem; }
@@ -363,7 +472,7 @@ li.tarefa-destaque .tarefa-titulo{
     display: none; 
     align-items: center;
     justify-content: space-between;
-    padding: 2.4rem 2.4rem 1.6rem;
+    padding: 2rem 2.4rem 1.6rem;
 }
 
 .checkbox.destaque .check-legenda,
@@ -402,14 +511,11 @@ li.tarefa-destaque .tarefa-titulo{
 
 .checkbox input:checked + .box{ border-color: var(--green-300);}
 
-li.p-alta .checkbox .box{ border-color: var(--red-200);}
-li.p-media .checkbox .box{ border-color: var(--yellow-200);}
-li.p-baixa .checkbox .box{ border-color: var(--blue-200);}
 
 .checkbox input:checked + .box::after{
     content: '';
     position: absolute;
-    left: .35rem;
+    left: .39rem;
     top: 0;
     width: .3rem;
     height: .8rem;
@@ -446,22 +552,6 @@ li.tarefa-destaque .tarefa-titulo {
 
 li.tarefa-destaque::before { display: none; }
 
-/* Borda por prioridade (destaque) */
-
-li.tarefa-destaque.p-alta  { border: 0.2rem solid var(--red-100); }
-li.tarefa-destaque.p-media { border: 0.2rem solid var(--yellow-100); }
-li.tarefa-destaque.p-baixa { border: 0.2rem solid var(--blue-100); }
-
-li.tarefa-destaque.p-alta .checkbox.destaque .check-legenda,
-li.tarefa-destaque.p-alta .editar-tarefa-btn.destaque{ color: var(--red-200); }
-
-li.tarefa-destaque.p-media .checkbox.destaque .check-legenda,
-li.tarefa-destaque.p-media .editar-tarefa-btn.destaque{ color: var(--yellow-200); }
-
-li.tarefa-destaque.p-baixa .checkbox.destaque .check-legenda,
-li.tarefa-destaque .editar-tarefa-btn.destaque{ color: var(--blue-200); }
-
-
 /* Barra dos filtros*/
 li.tarefa-destaque .info-filtros::before {
     content: '';
@@ -474,7 +564,6 @@ li.tarefa-destaque .info-filtros::before {
     opacity: 0;
     transition: opacity 0.1s ease-in-out;
 }
-
 
 /* =========================
    FILTRAGEM DAS TAREFAS
@@ -500,7 +589,7 @@ li.tarefa-destaque .info-filtros::before {
     background-color: var(--high-bg-color);
     border-radius: 1.6rem;
     width: 100%;
-    border: 1.5px solid var(--text-color-300);
+    border: 1.5px solid var(--purple-effect);
     padding: 1.6rem 2rem;
     transform: translateY(-100%);
     opacity: 0;
@@ -533,6 +622,7 @@ li.tarefa-destaque .info-filtros::before {
     appearance: none;
     text-align: center;
     -webkit-appearance: none;
+    cursor: pointer;
 }
 
 #reverter-filtros-btn{
@@ -546,6 +636,7 @@ li.tarefa-destaque .info-filtros::before {
     margin-top: .8rem;
     width: 100%;
     transition: transform .2s ease;
+    cursor: pointer;
 }
 
 #reverter-filtros-btn:active{ transform: scale(0.96); }
@@ -555,6 +646,7 @@ li.tarefa-destaque .info-filtros::before {
     justify-content: end;
     align-items: center;
     gap: 1.6rem;
+    padding: 0 .8rem;
 }
 
 .checkboxes-tarefas label{
@@ -562,7 +654,7 @@ li.tarefa-destaque .info-filtros::before {
     align-items: center;
     gap: .4rem;
     padding: .8rem 1.2rem;
-    border-radius: 1rem;
+    border-radius: 2.4rem;
     font-weight: var(--semibold);
     font-size: var(--size-caption);
     color: var(--purple-text);
@@ -571,12 +663,17 @@ li.tarefa-destaque .info-filtros::before {
 }
 
 label[for="filtrar-demais-tarefas"]{ border: 1.5px solid var(--purple-effect); }
+label[for="mostrar-todas-btn"]{ text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }
+
 
 #filtrar-demais-tarefas:checked ~ .checkboxes-tarefas label[for="filtrar-demais-tarefas"],
 #mostrar-todas-btn:checked ~ .checkboxes-tarefas label[for="mostrar-todas-btn"]{
     background-color: var(--purple-effect);
     color: var(--bg-color);
+    text-shadow: none;
 }
+
+#mostrar-todas-btn:checked ~ .exibicao-todas-tarefas .lista-container{ overflow-y: auto;}
 
 .checkboxes-tarefas label svg{
     width: 1.2rem;
@@ -586,7 +683,12 @@ label[for="filtrar-demais-tarefas"]{ border: 1.5px solid var(--purple-effect); }
 #mostrar-todas-btn:checked ~ .checkboxes-tarefas label[for="mostrar-todas-btn"] svg{ transform: rotate(180deg); }
 
 
-#mostrar-todas-btn:checked ~ .exibicao-todas-tarefas ul,
+#mostrar-todas-btn:checked ~ .exibicao-todas-tarefas ul{
+    opacity: 1; 
+    visibility: visible;
+    transform: translateY(0);
+}
+
 #mostrar-todas-btn:checked ~ .checkboxes-tarefas label[for="filtrar-demais-tarefas"]{ display: flex; }
 
 #mostrar-todas-btn,
@@ -604,12 +706,34 @@ label[for="filtrar-demais-tarefas"]{ display: none; }
    LISTA DE TAREFAS
 ========================= */
 
-ul {
-    display: none;
-    flex-direction: column;
+.lista-container{
     margin-top: 1.6rem;
+    max-height: 20.8rem;
+    /* padding-bottom: .8rem; */
+    overflow-y: hidden;
+    opacity: 1;
+}
+
+.lista-container::-webkit-scrollbar{ width: .8rem; }
+.lista-container::-webkit-scrollbar-track{ background-color: #e8e8e8; }
+
+.lista-container::-webkit-scrollbar-thumb{
+    background-color: #bdbdbd;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    border-radius: .5rem;
+}
+
+.lista-container::-webkit-scrollbar-thumb:hover{ background-color: var(--purple-effect); }
+
+ul {
+    display: flex;
+    flex-direction: column;
     padding: 0 0.8rem;
     gap: 0.4rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .1s ease;
+    transform: translateY(-100%);
 }
 
 li { 
@@ -623,7 +747,12 @@ li {
     box-shadow: 0.2rem 0.3rem 0.2rem rgba(0, 0, 0, 0.2);
     max-height: 4.8rem;
     overflow: hidden;
-    transition: all 0.1s ease-in-out;
+    transition: max-height 0.1s ease-in-out, box-shadow .2s ease-in-out, transform .2s ease-in-out;
+}
+
+li:hover{ 
+    box-shadow: 0.2rem 0.3rem 0.2rem rgba(0, 0, 0, 0.3); 
+    transform: scale(1.005);
 }
 
 li.ativo { max-height: 9.6rem; }
@@ -639,7 +768,6 @@ li::before {
     height: 100%;
     background-color: var(--text-color-500);
 }
-
 
 /* =========================
    CONTEÚDO INTERNO TASKS
@@ -663,6 +791,7 @@ li::before {
     text-align: center;
     transform: translateX(1em);
     overflow: auto;
+    cursor: pointer;
 }
 
 .tarefa-acoes {
@@ -671,7 +800,6 @@ li::before {
 }
 
 svg { pointer-events: none; }
-
 
 /* =========================
    BOTÕES DE AÇÃO TASKS
@@ -687,11 +815,22 @@ svg { pointer-events: none; }
     background-color: transparent;
 }
 
+.tarefa-acoes button,
+.checkbox,
+.checkbox.destaque,
+.editar-tarefa-btn,
+.tarefa-titulo{ transition: filter .1s ease-in-out; }
+
+.tarefa-acoes button:hover,
+.checkbox:hover,
+.checkbox.destaque:hover,
+.editar-tarefa-btn:hover,
+.tarefa-titulo:hover{ filter: brightness(80%); }
+
 .tarefa-acoes button svg{
     width: 2rem;
     height: 2rem;
 }
-
 
 /* =========================
    FILTROS TASKS
@@ -719,19 +858,6 @@ svg { pointer-events: none; }
 
 li.ativo .info-filtros::before { opacity: 1;}
 
-
-/* =========================
-   TAGS / ICONES
-========================= */
-
-.t-item-categoria::before { content: "🏷️ "; }
-.t-item-data::before      { content: "📅 "; }
-
-li.p-alta  .t-item-prioridade::before { content: "🔴 "; }
-li.p-media .t-item-prioridade::before { content: "🟡 "; }
-li.p-baixa .t-item-prioridade::before { content: "🔵 "; }
-
-
 /* =========================
    BOTÃO EDITAR TASK
 ========================= */
@@ -740,53 +866,27 @@ li.p-baixa .t-item-prioridade::before { content: "🔵 "; }
 li.ativo .editar-tarefa-btn { opacity: 1; }
 
 /* =========================
-   PRIORIDADES
+   FOOTER
 ========================= */
 
-/* ALTA */
-
-li.p-alta::before,
-li.p-alta.ativo .info-filtros::before { background-color: var(--red-200); }
-
-li.p-alta .tarefa-titulo { color: var(--red-300); }
-
-li.p-alta .tarefa-acoes button svg,
-li.p-alta .acoes-t-destaque button svg { color: var(--red-200); }
-
-/* MÉDIA */
-
-li.p-media::before,
-li.p-media.ativo .info-filtros::before { background-color: var(--yellow-200); }
-
-li.p-media .tarefa-titulo { color: var(--yellow-300); }
-
-li.p-media .tarefa-acoes button svg,
-li.p-media .acoes-t-destaque button svg { color: var(--yellow-200); }
-
-
-/* BAIXA */
-
-li.p-baixa::before,
-li.p-baixa.ativo .info-filtros::before { background-color: var(--blue-200); }
-
-li.p-baixa .tarefa-titulo { color: var(--blue-300); }
-
-li.p-baixa .tarefa-acoes button svg,
-li.p-baixa .acoes-t-destaque button svg { color: var(--blue-200); }
-
-/* =========================
-   CONCLUÍDO
-========================= */
-
-li.p-concluido { background-color: var(--green-100); }
-
-li.p-concluido::before,
-li.p-concluido.ativo .info-filtros::before { background-color: var(--green-300); }
-
-li.p-concluido .tarefa-titulo {
-    color: var(--green-400);
-    opacity: 0.7;
-    text-decoration: line-through;
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    margin-top: 2.4rem;
+    padding: 3.2rem 0;
+    border-top: .2rem solid var(--purple-effect);
 }
 
-li.p-concluido .tarefa-acoes button svg { color: var(--green-300); }
+footer p{
+    font-size: var(--size-caption);
+    font-weight: var(--semibold);
+    color: var(--text-color-300);
+}
+
+footer p span{
+    color: var(--purple-text);
+    font-weight: var(--semibold);
+}

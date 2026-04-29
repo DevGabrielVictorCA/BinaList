@@ -1,0 +1,33 @@
+@media screen and (min-width: 768px){
+    .logo{ margin-bottom: 5.6rem; }
+    .container{ padding: 6.4rem 9.6rem 0; }
+    .S-tarefas-concluidas { margin: 3.6rem; }
+
+    #T-destaque-title{ margin-left: .8rem;}
+
+    .tarefa-destaque-container{ padding: 1.6rem 0; }
+
+    li.tarefa-destaque{ 
+        min-height: 23.3rem;
+        padding: 0 2rem; 
+        margin: 3.6rem auto 2.4rem;
+        width: 75%;
+    }
+
+    .nenhuma-tarefa-container{ min-height: 28.9rem; } 
+
+    li.tarefa-destaque .info-principais{ margin-top: 3.2rem;}
+
+    .acoes-t-destaque{ padding-top: 4.4rem; }
+}
+
+@media screen and (min-width: 1024px){
+    #web-name{
+        position: absolute;
+        top: 3.6rem;
+        left: 6.4rem;
+    }
+    .logo{ margin: 5.6rem 0 6.4rem; }
+    .container{ padding: 3.2rem 26%; }
+    .lista-container{ margin-top: 2rem; }
+}
