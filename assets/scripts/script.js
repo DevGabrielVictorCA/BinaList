@@ -110,6 +110,7 @@ function renderizarTarefaDestaque() {
     const tarefaDestaque = [...tarefasPendentes].sort((a, b) => gerarTarefaScore(b) - gerarTarefaScore(a))[0];
     const li = criarLiTarefa(tarefaDestaque, !0);
     cardTarefaDestaque.appendChild(li);
+    atualizarIcons(cardTarefaDestaque);
 }
 function textoNenhumaTarefa(tarefasPendentes) {
     const clone = templateNenhumaTarefa.content.cloneNode(!0);
@@ -146,7 +147,7 @@ function renderizarTarefas(array = arrayTarefas) {
         listaDeTarefas.appendChild(criarLiTarefa(tarefa));
     });
     renderizarTarefaDestaque();
-    lucide.createIcons();
+    atualizarIcons(listaDeTarefas)
 }
 function erroFormulario(errorText, action) {
     textoDeErroContainer.classList.add("ativo");
@@ -202,7 +203,7 @@ function atualizarLabelFiltros() {
         <i data-lucide="arrow-up-z-a"></i>
         Filtros ${totalFiltros || ""}
     `;
-    lucide.createIcons();
+    atualizarIcons(cardTarefaDestaque);
 }
 function filtragemTarefas() {
     const filtrados = arrayTarefas.filter(tarefaPassaNosFiltros).sort(ordenarTarefas);
@@ -386,6 +387,7 @@ cardTarefaDestaque.addEventListener("click", acoesTarefas);
 filtragem.addEventListener("change", (e) => {
     const tipo = e.target.dataset.exibir;
     if (!tipo) return;
+    if (filtros[tipo] === e.target.value) return;
     filtros[tipo] = e.target.value;
     filtragemTarefas();
 });
@@ -406,9 +408,20 @@ campoTarefa.addEventListener("input", () => {
     erroFormulario("O que você precisa fazer?", "remove");
 });
 reverterFiltrosBtn.addEventListener("click", limparFiltros);
+function renderizarUIInicial() {
+    carregarTarefasLocal();
+    filtragemTarefas();
+
+    queueMicrotask(() => {
+        campoTarefa.focus();
+        atualizarIcons(listaDeTarefas);
+    });
+}
+function atualizarIcons(scope = document) {
+    lucide.createIcons({
+        nodes: scope.querySelectorAll("[data-lucide]")
+    });
+}
 document.addEventListener("DOMContentLoaded", () => {
-    lucide.createIcons();
+    renderizarUIInicial();
 });
-carregarTarefasLocal();
-filtragemTarefas();
-campoTarefa.focus();
