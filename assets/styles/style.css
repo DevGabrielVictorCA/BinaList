@@ -27,8 +27,8 @@
     --text-color-400: #374151;
     --text-color-300: #6B7280;
 
-    --purple-text: #6366F1;
-    --purple-effect: #787BFA; 
+    --purple-text: #5B5FEA;
+    --purple-effect: #4F46E5;
 
     --bg-color: #F3F4F6;
     --high-bg-color: #FFFFFF; 
@@ -342,7 +342,7 @@ label[for="add-filtros-input"]:hover,
 label[for="mostrar-todas-btn"]:hover,
 label[for="filtrar-demais-tarefas"]:hover,
 #reverter-filtros-btn:hover{ 
-    opacity: .8; 
+    opacity: .9; 
     transform: scale(1.01);
 }
 
@@ -710,7 +710,7 @@ label[for="filtrar-demais-tarefas"]{ display: none; }
 .lista-container{
     margin-top: 1.6rem;
     max-height: 20.8rem;
-    /* padding-bottom: .8rem; */
+    padding-bottom: .8rem;
     overflow-y: hidden;
     opacity: 1;
 }

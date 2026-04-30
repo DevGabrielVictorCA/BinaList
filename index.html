@@ -13,29 +13,45 @@
     <!-- SEO -->
     <meta name="robots" content="index, follow">
     <meta name="author" content="BinaList">
-    <!-- <link rel="canonical" href="https://seudominio.com/"> -->
+    <link rel="canonical" href="https://www.binalist.online/">
 
-    <!-- OPEN GRAPH (Facebook / WhatsApp / LinkedIn) -->
+    <!-- OPEN GRAPH -->
     <meta property="og:title" content="BinaList — Produtividade sem distrações">
     <meta property="og:description" content="Uma to-do list minimalista focada em execução real de tarefas. Menos distração, mais foco e produtividade.">
     <meta property="og:type" content="website">
-    <!-- <meta property="og:url" content="https://seudominio.com/"> -->
-    <!-- <meta property="og:image" content="https://seudominio.com/assets/preview.png"> -->
+    <meta property="og:url" content="https://www.binalist.online/">
 
-    <!-- PRELOAD (performance) -->
+    <!-- FONT PERFORMANCE -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- FONTE -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- GOOGLE FONTS -->
+    <link rel="preload"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    </noscript>
 
-    <!-- STYLES -->
-    <link rel="stylesheet" href="assets/styles/filtragem.css">
-    <link rel="stylesheet" href="assets/styles/style.css?v=4">
-    <link rel="stylesheet" href="assets/styles/responsividade.css">
+    <!-- CSS -->
+    <link rel="preload" href="assets/styles/style.css?v=4" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/styles/filtragem.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="assets/styles/responsividade.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
-    <!-- ICON (opcional, mas recomendado para branding) -->
-    <!-- <link rel="icon" href="assets/favicon.ico"> -->
+    <noscript>
+        <link rel="stylesheet" href="assets/styles/style.css?v=4">
+        <link rel="stylesheet" href="assets/styles/filtragem.css">
+        <link rel="stylesheet" href="assets/styles/responsividade.css">
+    </noscript>
+
+    <!-- ICON -->
+    <link rel="icon" href="assets/images/binalist-favicon.png" type="image/png" sizes="32x32">
+
+    <!-- CSS INLINE INICIAL -->
+    <style>
+        body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -45,7 +61,6 @@
             <span id="web-name">BinaList</span>
 
             <article class="logo">
-                <!-- H1 principal adicionado (SEO) -->
                 <h1 class="visually-hidden">BinaList - Organizador de tarefas</h1>
 
                 <h2>Hoje</h2>
@@ -61,7 +76,6 @@
                 <form action="#" class="taskform">
 
                     <div class="input-wrapper">
-                        <!-- label acessível -->
                         <label for="campo-tarefa" class="visually-hidden">Digite sua tarefa</label>
 
                         <input 
@@ -74,7 +88,6 @@
                         <i data-lucide="pencil" class="icon" aria-hidden="true"></i>
                     </div>
 
-                    <!-- aria-live para feedback -->
                     <div class="texto-de-erro-container" aria-live="polite">
                         <span id="texto-de-erro"></span>
                     </div>
@@ -95,7 +108,6 @@
                         </div>
 
                         <div class="filtros">
-                            <!-- labels invisíveis -->
                             <label for="categorias" class="visually-hidden">Categoria</label>
                             <select id="categorias" class="item-input">
                                 <option value="" selected disabled>&#x1F3F7;&#xFE0F; Categoria</option>
@@ -287,7 +299,7 @@
         </footer>
     </div>
 
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
     <script type="module" src="assets/scripts/script.js"></script>
 </body>
 </html>
