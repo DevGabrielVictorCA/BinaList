@@ -35,11 +35,11 @@
 
     --size-h1: clamp(3rem, 4.5vw, 4rem);
     --size-h2: clamp(2.4rem, 3.5vw, 3.2rem);
-    --size-h3: clamp(1.8rem, 3vw, 2.4rem);
+    --size-h3: clamp(2.2rem, 3vw, 2.4rem);
 
     --size-body: clamp(1.6rem, 2vw, 1.8rem);
     --size-small: clamp(1.4rem, 1.6vw, 1.6rem);
-    --size-caption: clamp(1.2rem, 1.2vw, 1.4rem);
+    --size-caption: clamp(1.3rem, 1.2vw, 1.4rem);
 
     --bold: 700;
     --semibold: 600;
@@ -449,7 +449,7 @@ li.tarefa-destaque .tarefa-titulo {
 
 #nenhuma-tarefa-text{
     text-align: center;
-    font-size: var(--size-small);
+    font-size: var(--size-caption);
     font-weight: var(--regular);
     color: var(--text-color-300);
 }
