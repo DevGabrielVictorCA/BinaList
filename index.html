@@ -35,9 +35,9 @@
     </noscript>
 
     <!-- CSS -->
-    <link rel="preload" href="assets/styles/style.css?v=4" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assets/styles/filtragem.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="assets/styles/responsividade.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="assets/styles/style.css?v=4" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="assets/styles/filtragem.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="assets/styles/responsividade.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
     <noscript>
         <link rel="stylesheet" href="assets/styles/style.css?v=4">
@@ -161,8 +161,10 @@
             <section class="tarefa-destaque-container" aria-labelledby="destaque-title">
                 <h3 id="T-destaque-title">Agora: </h3>
                 <h2 id="destaque-title" class="visually-hidden">Tarefa em destaque</h2>
-
                 <div class="card-tarefa-destaque"></div>
+                <div class="empty-state" id="empty-destaque">
+                    Nenhuma tarefa disponível
+                </div>
             </section>
 
             <!-- LISTA -->
