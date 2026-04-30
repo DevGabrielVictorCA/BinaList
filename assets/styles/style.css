@@ -202,55 +202,57 @@ main { flex: 1; }
    FILTROS E AÇÕES
 ========================= */
 
-.S-formulario{
+.S-formulario {
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
-    max-height: 3.5rem;
     transition: all .2s ease-in-out;
 }
 
 .filtros-e-acao {
     display: flex;
-    flex-direction: column-reverse;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.4rem;
+    flex-direction: column;
     width: 100%;
-    margin-top: 0.8rem;
-    position: relative;
-    overflow: hidden;
-    transform: translateY(-120%);
     opacity: 0;
-    position: relative;
-    z-index: -1;
-    transition: all .2s ease-in-out;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease;
 }
 
-.S-formulario.ativo{ max-height: 20rem; }
-
-.S-formulario.ativo .filtros-e-acao{
-    transform: translateY(0);
+.S-formulario.ativo .filtros-e-acao {
     opacity: 1;
-    z-index: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
-
-/* FILTROS */
 
 .filtros {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 0;
     width: 100%;
-    padding: 0.6rem;
-    border: 1.5px solid var(--text-color-300); 
-    border-radius: 1rem; 
-    background-color: var(--high-bg-color);
-    transform: translateY(100%) scale(0);
+    max-height: 0;
+    overflow: hidden;
     opacity: 0;
-    transition: all 0.1s ease-in-out;
+    transform: translateY(-6px);
+    border: 1.5px solid var(--text-color-300);
+    background-color: var(--high-bg-color);
+    border-radius: 1rem;
+    transition: 
+        max-height .25s ease,
+        opacity .2s ease,
+        transform .2s ease,
+        padding .2s ease;
 }
+
+#add-filtros-input:checked ~ .filtros {
+    max-height: 6rem;
+    opacity: 1;
+    transform: translateY(0);
+    padding: 0.7rem 1.6rem;
+    margin: .8rem 0;
+}
+
+/* =========================
+   INPUTS
+========================= */
 
 .item-input {
     flex: 1;
@@ -264,7 +266,7 @@ main { flex: 1; }
     color: var(--text-color-400);
     opacity: 0.8;
     cursor: pointer;
-    appearance: none; 
+    appearance: none;
     -webkit-appearance: none;
 }
 
@@ -273,20 +275,20 @@ main { flex: 1; }
     color: var(--text-color-300);
 }
 
-/* AÇÔES */
+/* =========================
+   AÇÕES
+========================= */
 
 .acoes {
     display: flex;
     align-items: end;
     justify-content: space-between;
+
     width: 100%;
-    gap: 0;
-    position: relative;
     min-height: 3.6rem;
-    transition: min-height 0.2s ease-in-out;
 }
 
-#add-filtros-input{ display: none; }
+#add-filtros-input { display: none; }
 
 label[for="add-filtros-input"] {
     display: block;
@@ -297,28 +299,16 @@ label[for="add-filtros-input"] {
     background-color: transparent;
     border: none;
     border-radius: 2.4rem;
-    transition: all 0.2s ease-in-out;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);    
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* =========================
-   EXIBIR FILTROS (CHECKED)
-========================= */
-
-#add-filtros-input:checked ~ .acoes { min-height: 7.2rem; }
-
-#add-filtros-input:checked ~ .acoes label[for="add-filtros-input"]{
+#add-filtros-input:checked ~ .acoes label[for="add-filtros-input"] {
     background-color: var(--purple-effect);
     color: var(--bg-color);
     text-shadow: none;
 }
-
-#add-filtros-input:checked ~ .filtros { 
-    transform: translateY(0) scale(1);
-    opacity: 1;
-}
-
 
 /* =========================
    BOTÕES FORMULÁRIO

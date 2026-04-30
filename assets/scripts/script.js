@@ -373,7 +373,7 @@ function handleClickForaDoFormulario(e) {
         createTaskForm.classList.remove("ativo");
         erroFormulario("", "remove");
         limparCampos();
-        addFiltros.checked = !1;
+        addFiltros.checked = false;
     }
 }
 enviarTarefaBtn.addEventListener("click", (e) => {
