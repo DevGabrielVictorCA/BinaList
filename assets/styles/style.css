@@ -81,14 +81,25 @@ main { flex: 1; }
    HEADER / LOGO
 ========================= */
 
+.logo-container{
+    display: flex;
+    gap: .4rem;
+    margin-bottom: 4.8rem;
+}
+
 #web-name {
     display: block;
     font-size: var(--size-h3);
     font-weight: var(--semibold);
     color: var(--purple-text);
-    margin-bottom: 4.8rem;
     letter-spacing: 0.1rem;
 }
+
+#logo-img{
+    width: 28px;
+    height: 28px;
+}
+
 
 .logo {
     margin: 2rem 0 3.2rem;
@@ -99,7 +110,6 @@ main { flex: 1; }
     font-size: var(--size-h2);
     font-weight: var(--medium);
 }
-
 .logo h1 {
     font-size: var(--size-h1);
     font-weight: var(--semibold);
