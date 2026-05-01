@@ -12,7 +12,7 @@ A **Bina List** foi criada para resolver exatamente isso.
 
 Acesse a aplicação:
 
-👉 [Acessar Bina List](https://www.binalist.online/)
+👉 [Acessar BinaList](https://www.binalist.online/)
 
 ---
 
