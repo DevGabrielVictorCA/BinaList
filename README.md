@@ -1,4 +1,4 @@
-# 🚀 Bina List — Pare de organizar. Comece a executar.
+# 🚀 Bina List — Produtividade sem distrações.
 
 A maioria das to-do lists falha por um motivo simples:
 
